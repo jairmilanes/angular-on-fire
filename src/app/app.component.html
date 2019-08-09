@@ -20,44 +20,152 @@
             <figure>
               <img src="assets/angular-logo.png" />
             </figure>
-            <h3>Angular 8</h3>
-            <p>All the latest features like web workers, deferential and improved lazy loading, Node 10 support and all the goodies Angular provides.</p>
+            <div>
+              <h3>Angular 8</h3>
+              <p>All the latest features like web workers, deferential and improved lazy loading, Node 10 support and all the goodies Angular provides.</p>
+            </div>
           </div>
-          <div>
+          <div class="aof-row-reverse">
             <figure>
               <img src="assets/firebase-logo.png" />
             </figure>
-            <h3>Firebase</h3>
-            <p>The power of Firebase services at your disposal, file storage, object database, hosting, cloud functions and much more.</p>
+            <div>
+              <h3>Firebase</h3>
+              <p>The power of Firebase services at your disposal, file storage, object database, hosting, cloud functions and much more.</p>
+            </div>
           </div>
           <div>
             <figure>
               <img src="assets/cypress-logo.png" />
             </figure>
-            <h3>Cypress</h3>
-            <p>Cypress has taken the development community by storm, with it's great interface and ease to use apis, you can have your application tested in no time.</p>
+            <div>
+              <h3>Cypress</h3>
+              <p>Cypress has taken the development community by storm, with it's great interface and ease to use apis, you can have your application tested in no time.</p>
+            </div>
           </div>
-          <div>
+          <div class="aof-row-reverse">
             <figure>
               <img src="assets/jest-logo.png" />
             </figure>
-            <h3>Jest</h3>
-            <p>Test runner created by Facebook, widely used, vast documentation and community support.</p>
+            <div>
+              <h3>Jest</h3>
+              <p>Test runner created by Facebook, widely used, vast documentation and community support.</p>
+            </div>
+          </div>
+
+          <div class="aof-full-tech-block">
+            <figure>
+              <img src="assets/cypress-logo.png" />
+            </figure>
+            <div>
+              <h3>Ci/Cd Ready</h3>
+              <p>Angular on Fire comes ready for ci/cd deployments with Circle CI, everything is pre-configured, all you have to do is link your Github account to Circle CI, push code and voalá!</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
   <section class="aof-section aof-docs-section">
     <div class="aof-section-container">
-      <h2>Usage</h2>
-
+      <h2>Getting Started</h2>
+      <p>Get your project up and running in minutes</p>
       <div class="aof-section-content">
-        <p>Start by forking your own version of Angular on Fire and clone the repository to your local machine.</p>
-        <p>Follow the steps in the README.md to get your project up and running in only a couple of minutes.</p>
+        <div class="aof-doc-step">
+          <h3>Clone Angular On Fire</h3>
+          <p>Start by cloning Angular on Fire to a local directory:</p>
+
+          <div>
+            <pre><code [highlight]="'mkdir aof-project'"></code></pre>
+          </div>
+
+          <div>
+            <pre><code [highlight]="'cd aof-project'"></code></pre>
+          </div>
+
+          <div>
+            <pre><code [highlight]="'git clone https://github.com/layoutzweb/angular-on-fire.git .'"></code></pre>
+          </div>
+        </div>
+
+        <div class="aof-doc-step">
+          <h3>Dependencies</h3>
+          <p>To install all dependencies we must run the root:</p>
+          <div>
+            <pre><code [highlight]="'npm install'"></code></pre>
+          </div>
+
+          <p>and also from the functions directory:</p>
+          <div>
+            <pre><code [highlight]="'cd functions'"></code></pre>
+          </div>
+          <div>
+            <pre><code [highlight]="'npm install'"></code></pre>
+          </div>
+        </div>
+
+        <div class="aof-doc-step">
+          <h3>Dev Server</h3>
+          <p>To start your local Angular dev server, run:</p>
+          <div>
+            <pre><code [highlight]="'npm start'"></code></pre>
+          </div>
+          <p>Then visit <a href="http://localhost:4200" target="_blank">http://localhost:4200</a> to see your application live.</p>
+        </div>
+
+        <div class="aof-doc-step">
+          <h3>Prod Build</h3>
+          <p>To build your SSR version of the app, first build your main application:</p>
+          <div>
+            <pre><code [highlight]="'npm run build:ssr'"></code></pre>
+          </div>
+          <p>Then build your functions:</p>
+          <div>
+            <pre><code [highlight]="'cd functions'"></code></pre>
+          </div>
+          <div>
+            <pre><code [highlight]="'npm run build'"></code></pre>
+          </div>
+          <p>Then navigate back to root:</p>
+          <div>
+            <pre><code [highlight]="'cd ../'"></code></pre>
+          </div>
+        </div>
+
+        <div class="aof-doc-step">
+          <h3>Prod Server</h3>
+          <p>To run your production server with server side rendering enabled, use:</p>
+          <div>
+            <pre><code [highlight]="'npm serve'"></code></pre>
+          </div>
+          <p>This uses Firebase emulation server to run your application through the `ssrServer` Cloud Function locally.</p>
+          <p>Visit <a href="http://localhost:5000" target="_blank">http://localhost:5000</a> to see your application live.</p>
+        </div>
       </div>
+
+      <div class="aof-doc-step">
+        <h3>Deploy</h3>
+        <p>Angular On Fire is pre-configured to be deployed to Firebase, but can also be deployed to other platforms.</p>
+        <p>Before you start, make sure you have created a Firebase account <a href="https://firebase.google.com">here</a>, and a new Firebase project, here's a <a href="https://www.youtube.com/watch?v=6juww5Lmvgo" target="_blank">nice video tutorial</a> on how to do that. </p>
+        <p>With your Firebase account and project ready, add your project</p>
+        <div>
+          <pre><code [highlight]="'firebase deploy'"></code></pre>
+        </div>
+        <p>Then visit your app url provided on Firebase console which looks something like `https://<YOUR APP ID>.web.app/`.</p>
+        <p>You can also configure your own domain, to do so follow the steps in <a href="https://firebase.google.com/docs/hosting/custom-domain" target="_blank">here</a>.</p>
+      </div>
+
+
+
+      <div class="aof-doc-header">
+        <h2>Configure Ci/Cd</h2>
+      </div>
+
+
     </div>
   </section>
+
   <section class="aof-section aof-ci-section">
     <div class="aof-section-container">
       <h2>Ci/Cd Ready</h2>
@@ -74,6 +182,7 @@
       </div>
     </div>
   </section>
+
   <footer class="aof-footer">
     <div class="aof-footer-container">
       <p>Developed By Jair Milanes</p>
