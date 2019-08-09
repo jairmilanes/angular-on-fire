@@ -1,0 +1,157 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  preload:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - run:
+          name: Updating dependencies
+          command: CYPRESS_INSTALL_BINARY=0 npm i
+
+      - run:
+          name: Installing Cloud Functions Dependencies
+          command: |
+            cd functions
+            npm i
+            cd ../
+
+      - save_cache:
+          name: Caching updated app dependencies
+          paths:
+            - node_modules
+          key: npm-deps-{{ checksum "package-lock.json" }}
+
+      - save_cache:
+          name: Caching updated functions dependencies
+          paths:
+            - functions/node_modules
+          key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+
+  lint:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - run:
+          name: Linting
+          command: |
+            npm run lint
+            cd functions
+            npm run lint
+            cd ../
+
+  build:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - run:
+          name: Building application
+          command: |
+            npm run build:ssr
+            cd functions
+            npm run build
+            cd ../
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+            - functions/lib
+            - functions/dist
+
+  deploy:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Deploying to Firebase
+          command: ./node_modules/.bin/firebase deploy --only functions:dashfyWebsiteSsrServer,hosting --token "$FIREBASE_CI_TOKEN"
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - preload
+      - lint:
+          requires:
+            - preload
+      - build:
+          requires:
+            - lint
+      - deploy:
+          requires:
+            - build
+
