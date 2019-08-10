@@ -3,31 +3,25 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HighlightModule } from 'ngx-highlightjs';
-
-import bash from 'highlight.js/lib/languages/bash';
-import typescript from 'highlight.js/lib/languages/typescript';
-
-export function hljsLanguages() {
-  return [
-    {name: 'typescript', func: typescript},
-    {name: 'bash', func: bash}
-  ];
-}
-
+import {CodeHighlightService} from './highlight.service';
+import {CodeBlockComponent} from './components/code-block.component';
+import {FireAnimationComponent} from './components/fire-animation.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CodeBlockComponent,
+    FireAnimationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
-    HighlightModule.forRoot({
-      languages: hljsLanguages
-    })
+    FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    CodeHighlightService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

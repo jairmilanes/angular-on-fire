@@ -4,9 +4,22 @@
 
   </header>
 
-  <section class="aof-jumbotron">
-    <h1>Angular On Fire</h1>
-    <p>Pre-configured Angular, Firebase, Cypress, Jest and server side rendering application</p>
+  <section class="aof-jumbotron" [ngStyle]="{height: innerHeight + 'px'}">
+    <div class="aof-angular-logo">
+      <app-fire-animation size="large" speed="slow"></app-fire-animation>
+      <app-fire-animation size="medium"></app-fire-animation>
+      <app-fire-animation size="small" id="small-one" speed="fast"></app-fire-animation>
+      <app-fire-animation size="small" id="small-two" speed="fast"></app-fire-animation>
+      <app-fire-animation size="small" id="small-center" speed="fast"></app-fire-animation>
+      <img src="assets/angular-logo-large.png" />
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <h1>On Fire</h1>
+      <p>Pre-configured Angular, Firebase, Cypress, Jest and server side rendering application</p>
+      <a class="aof-main-action" href="https://github.com/layoutzweb/angular-on-fire" target="_blank">
+        View It On Github
+      </a>
+    </div>
   </section>
 
   <section class="aof-section aof-tech-section">
@@ -25,6 +38,17 @@
               <p>All the latest features like web workers, deferential and improved lazy loading, Node 10 support and all the goodies Angular provides.</p>
             </div>
           </div>
+
+          <div>
+            <figure>
+              <img src="assets/rxjs-logo.png" />
+            </figure>
+            <div>
+              <h3>RxJs 6</h3>
+              <p>Take your projects to the next level with RxJs, the power of observables at your fingertips.</p>
+            </div>
+          </div>
+
           <div class="aof-row-reverse">
             <figure>
               <img src="assets/firebase-logo.png" />
@@ -34,6 +58,7 @@
               <p>The power of Firebase services at your disposal, file storage, object database, hosting, cloud functions and much more.</p>
             </div>
           </div>
+
           <div>
             <figure>
               <img src="assets/cypress-logo.png" />
@@ -43,6 +68,7 @@
               <p>Cypress has taken the development community by storm, with it's great interface and ease to use apis, you can have your application tested in no time.</p>
             </div>
           </div>
+
           <div class="aof-row-reverse">
             <figure>
               <img src="assets/jest-logo.png" />
@@ -53,9 +79,9 @@
             </div>
           </div>
 
-          <div class="aof-full-tech-block">
+          <div>
             <figure>
-              <img src="assets/cypress-logo.png" />
+              <img src="assets/circleci-logo.png" />
             </figure>
             <div>
               <h3>Ci/Cd Ready</h3>
@@ -75,71 +101,68 @@
         <div class="aof-doc-step">
           <h3>Clone Angular On Fire</h3>
           <p>Start by cloning Angular on Fire to a local directory:</p>
-
-          <div>
-            <pre><code [highlight]="'mkdir aof-project'"></code></pre>
-          </div>
-
-          <div>
-            <pre><code [highlight]="'cd aof-project'"></code></pre>
-          </div>
-
-          <div>
-            <pre><code [highlight]="'git clone https://github.com/layoutzweb/angular-on-fire.git .'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            mkdir aof-project
+            cd aof-project
+            git clone https://github.com/layoutzweb/angular-on-fire.git .
+          </app-code-block>
         </div>
 
         <div class="aof-doc-step">
           <h3>Dependencies</h3>
-          <p>To install all dependencies we must run the root:</p>
-          <div>
-            <pre><code [highlight]="'npm install'"></code></pre>
-          </div>
+          <p>To install all dependencies we must run from the root:</p>
+          <app-code-block language="bash">
+            npm install
+          </app-code-block>
 
           <p>and also from the functions directory:</p>
-          <div>
-            <pre><code [highlight]="'cd functions'"></code></pre>
-          </div>
-          <div>
-            <pre><code [highlight]="'npm install'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            cd functions
+            npm install
+          </app-code-block>
+
+          <p>Make sure to navigate back to root for next steps:</p>
+          <app-code-block language="bash">
+            cd ../
+          </app-code-block>
         </div>
 
         <div class="aof-doc-step">
           <h3>Dev Server</h3>
           <p>To start your local Angular dev server, run:</p>
-          <div>
-            <pre><code [highlight]="'npm start'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            npm start
+          </app-code-block>
           <p>Then visit <a href="http://localhost:4200" target="_blank">http://localhost:4200</a> to see your application live.</p>
         </div>
 
         <div class="aof-doc-step">
           <h3>Prod Build</h3>
           <p>To build your SSR version of the app, first build your main application:</p>
-          <div>
-            <pre><code [highlight]="'npm run build:ssr'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            npm run build:ssr
+          </app-code-block>
+
           <p>Then build your functions:</p>
-          <div>
-            <pre><code [highlight]="'cd functions'"></code></pre>
-          </div>
-          <div>
-            <pre><code [highlight]="'npm run build'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            cd functions
+            npm run build
+          </app-code-block>
+
           <p>Then navigate back to root:</p>
-          <div>
-            <pre><code [highlight]="'cd ../'"></code></pre>
-          </div>
+          <app-code-block language="bash">
+            cd ../
+          </app-code-block>
         </div>
 
         <div class="aof-doc-step">
           <h3>Prod Server</h3>
           <p>To run your production server with server side rendering enabled, use:</p>
-          <div>
-            <pre><code [highlight]="'npm serve'"></code></pre>
-          </div>
-          <p>This uses Firebase emulation server to run your application through the `ssrServer` Cloud Function locally.</p>
+          <app-code-block language="bash">
+            npm serve
+          </app-code-block>
+
+          <p>This uses Firebase emulation server to run your application through the <code>ssrServer</code> Cloud Function locally.</p>
           <p>Visit <a href="http://localhost:5000" target="_blank">http://localhost:5000</a> to see your application live.</p>
         </div>
       </div>
@@ -147,45 +170,61 @@
       <div class="aof-doc-step">
         <h3>Deploy</h3>
         <p>Angular On Fire is pre-configured to be deployed to Firebase, but can also be deployed to other platforms.</p>
+        <h6>Create a Firebase Account</h6>
         <p>Before you start, make sure you have created a Firebase account <a href="https://firebase.google.com">here</a>, and a new Firebase project, here's a <a href="https://www.youtube.com/watch?v=6juww5Lmvgo" target="_blank">nice video tutorial</a> on how to do that. </p>
-        <p>With your Firebase account and project ready, add your project</p>
-        <div>
-          <pre><code [highlight]="'firebase deploy'"></code></pre>
-        </div>
-        <p>Then visit your app url provided on Firebase console which looks something like `https://<YOUR APP ID>.web.app/`.</p>
+
+        <h6>Configure your project id</h6>
+        <p>With your Firebase account and project ready, add your project id to the <code>./.firebaserc</code> file</p>
+        <app-code-block language="json">{{stringfy({
+              "projects": {
+                "default": "my-project-id"
+              }
+        })}}</app-code-block>
+
+        <h6>Deploy your app</h6>
+        <p>Then deploy your app:</p>
+        <app-code-block language="bash">
+          firebase deploy
+        </app-code-block>
+
+        <p>Then visit your app url provided on Firebase console which looks something like <code>https://[YOUR APP ID].web.app/</code>.</p>
         <p>You can also configure your own domain, to do so follow the steps in <a href="https://firebase.google.com/docs/hosting/custom-domain" target="_blank">here</a>.</p>
       </div>
 
 
+      <div class="aof-doc-step">
+        <h3>Configure Ci/Cd</h3>
+        <p>Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away.</p>
 
-      <div class="aof-doc-header">
-        <h2>Configure Ci/Cd</h2>
-      </div>
-
-
-    </div>
-  </section>
-
-  <section class="aof-section aof-ci-section">
-    <div class="aof-section-container">
-      <h2>Ci/Cd Ready</h2>
-      <p>Angular on Fire comes ready for ci/cd deployment with Circle CI</p>
-
-      <div class="aof-section-content">
-        <p>To get started with builds follow these steps:</p>
-        <ul>
-          <li>If you don't already have one, you can get a free account to get started <a href="https://circleci.com/integrations/github/" target="_blank">here</a>, you can log in with your github account to make it even easier to configure.</li>
+        <ul class="aof-list-steps">
+          <li>If you haven't done so, go ahead and get a Circle CI free account <a href="https://circleci.com/integrations/github/" target="_blank">here</a>, you can log in with your github account to make it even easier to configure.</li>
           <li>Follow the steps to <a href="https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci" target="_blank">connect your Github account and link your project</a> to Circle Ci.</li>
           <li>Make sure to skip file configuration steps since everything is already configured for you, all you need is to link your project to Circle Ci.</li>
           <li>Then just push code to your repository, a siple commit is enough to trigger your build.</li>
         </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="aof-section aof-colab-section">
+    <div class="aof-section-container">
+      <h2>Contributions</h2>
+      <p>Got some minutes to spare? Want to contribute to Angular On Fire?</p>
+
+      <div class="aof-section-content">
+          <p>There is always room for improvement, and we are always accepting pull requests bug fixes and improvements.</p>
+          <p>All you have to do is submit a PR following the guidelines in the template and we will take a look as son as we can.</p>
       </div>
     </div>
   </section>
 
   <footer class="aof-footer">
     <div class="aof-footer-container">
-      <p>Developed By Jair Milanes</p>
+      <div></div>
+      <div class="aof-creator">
+        <p>Developed By <strong><a href="https://www.linkedin.com/in/jmilanes" target="_blank">Jair Milanes</a></strong></p>
+      </div>
     </div>
   </footer>
 </div>
