@@ -13,7 +13,7 @@ export class JumbotronComponent implements OnChanges {
     innerHeight: number;
 
     @HostListener('window:resize', ['$event'])
-    onResize() {
+    onResize(event) {
         this.innerHeight = window.innerHeight;
     }
 
