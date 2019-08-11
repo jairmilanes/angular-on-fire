@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 import 'clipboard';
 
-import 'prismjs';
+import * as Prism from 'prismjs';
 import 'prismjs/plugins/toolbar/prism-toolbar';
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
 import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace';
@@ -20,12 +20,12 @@ import 'prismjs/components/prism-sass';
 import 'prismjs/components/prism-scss';
 import 'prismjs/components/prism-json';
 
-declare var Prism: any;
-
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CodeHighlightService {
 
-    constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+    constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
     highlightAll() {
         if (isPlatformBrowser(this.platformId)) {

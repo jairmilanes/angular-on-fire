@@ -1,0 +1,24 @@
+.aof-list {
+  padding-left: 20px;
+  margin: 14px 0;
+  list-style: disc;
+
+  li {
+    display: block;
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+
+    &:before {
+      display: block;
+      content: ' - ';
+      padding: 0 4px;
+      opacity: .2;
+      font-size: 36px;
+      line-height: 14px;
+      height: 18px;
+      position: absolute;
+      left: 0;
+    }
+  }
+}

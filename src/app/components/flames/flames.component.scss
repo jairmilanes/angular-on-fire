@@ -4,16 +4,16 @@ $brownd:#612E25;
 $yellow: #fff50f;
 $orange: #fdb109;
 $red: #ff0008;
-$animationSlow:4s;
-$animationNormal:2s;
-$animationFast:1s;
+$animationSlow:6s;
+$animationNormal:4s;
+$animationFast:2s;
 
 @mixin animationSpeeds($speed) {
   &:nth-child(2n + 1) {
-    animation: flameodd $speed ease-in infinite;
+    animation: flameOdd $speed ease-in infinite;
   }
   &:nth-child(2n) {
-    animation: flameeven $speed ease-in infinite;
+    animation: flameEven $speed ease-in infinite;
   }
   &:nth-child(1) {
     animation-delay:0s;
@@ -29,63 +29,7 @@ $animationFast:1s;
   }
 }
 
-.aof-fire-animation {
-  &.aof-fire-small {
-    height:10vw;
-    width:10vw;
-  }
-
-  &.aof-fire-medium {
-    height:20vw;
-    width:20vw;
-  }
-
-  &.aof-fire-large {
-    height:30vw;
-    width:30vw;
-  }
-
-  //background-color:$red;
-  .aof-flames {
-    position: absolute;
-    bottom:40%;
-    left:50%;
-    width:60%;
-    height:60%;
-    //background-color:$red;
-    transform:translateX(-50%)rotate(45deg);
-  }
-
-  .aof-flame {
-    position: absolute;
-    right:0%;
-    bottom:0%;
-    width:0%;
-    height:0%;
-    background-color:$yellow;
-    border-radius:1vw;
-  }
-
-  &.aof-fire-slow {
-    .aof-flame {
-      @include animationSpeeds($animationSlow);
-    }
-  }
-
-  &.aof-fire-normal {
-    .aof-flame {
-      @include animationSpeeds($animationNormal);
-    }
-  }
-
-  &.aof-fire-fast {
-    .aof-flame {
-      @include animationSpeeds($animationFast);
-    }
-  }
-}
-
-@keyframes flameodd {
+@keyframes flameOdd {
   0%, 100% {
     width:0%;
     height:0%;
@@ -120,7 +64,7 @@ $animationFast:1s;
   }
 }
 
-@keyframes flameeven {
+@keyframes flameEven {
   0%, 100% {
     width:0%;
     height:0%;
@@ -154,3 +98,64 @@ $animationFast:1s;
     bottom:150%;
   }
 }
+
+.aof-fire-animation {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+
+  &.aof-fire-small {
+    height: 60%;
+    width: 60%;
+  }
+
+  &.aof-fire-medium {
+    height: 100%;
+    width: 100%;
+  }
+
+  &.aof-fire-large {
+    height: 140%;
+    width: 140%;
+  }
+
+  .aof-flames {
+    position: absolute;
+    bottom:40%;
+    left:50%;
+    width:60%;
+    height:60%;
+    transform: translateX(-50%)rotate(45deg);
+  }
+
+  .aof-flame {
+    position: absolute;
+    right:0%;
+    bottom:0%;
+    width:0%;
+    height:0%;
+    background-color:$yellow;
+    border-radius:1vw;
+  }
+
+  &.aof-fire-slow {
+    .aof-flame {
+      @include animationSpeeds($animationSlow);
+    }
+  }
+
+  &.aof-fire-normal {
+    .aof-flame {
+      @include animationSpeeds($animationNormal);
+    }
+  }
+
+  &.aof-fire-fast {
+    .aof-flame {
+      @include animationSpeeds($animationFast);
+    }
+  }
+}
+
+

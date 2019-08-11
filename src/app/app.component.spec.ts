@@ -1,35 +1,55 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserModule} from '@angular/platform-browser';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {CodeBlockComponent} from './components/code-block.component';
+import {FlamesComponent} from './components/flames/flames.component';
+import {FlexBlockComponent} from './components/flex-block/flex-block.component';
+import {JumbotronComponent} from './components/jumbotron/jumbotron.component';
+import {ContentSectionComponent} from './components/content-section/content-section.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {CodeHighlightService} from './services/highlight.service';
 import { AppComponent } from './app.component';
 
+const serviceMock = {
+  highlightAll: jest.fn()
+};
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+
+  let fixture: ComponentFixture<AppComponent>;
+  let instance: AppComponent;
+
+  beforeEach((() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        BrowserModule,
+        FlexLayoutModule,
+        FontAwesomeModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        CodeBlockComponent,
+        FlamesComponent,
+        FlexBlockComponent,
+        JumbotronComponent,
+        ContentSectionComponent,
+        FooterComponent
       ],
-    }).compileComponents();
+      providers: [
+        {provide: CodeHighlightService, useValue: serviceMock }
+      ]
+    });
+
+    fixture = TestBed.createComponent(AppComponent);
+    instance = fixture.debugElement.componentInstance;
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(instance).toBeTruthy();
   });
 
   it(`should have as title 'angular-on-fire'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('angular-on-fire');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular-on-fire!');
+    expect(instance.title).toEqual('angular-on-fire');
   });
 });

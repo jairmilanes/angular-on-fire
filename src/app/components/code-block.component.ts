@@ -10,8 +10,7 @@ import {Component, Input} from '@angular/core';
     styles: [
         'code, pre { white-space: pre; }',
         'pre { margin-bottom: 20px; }'
-    ],
-    preserveWhitespaces: true
+    ]
 })
 export class CodeBlockComponent {
 

@@ -4,6 +4,35 @@
 #
 version: 2
 jobs:
+  lint:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - run:
+          name: Linting
+          command: |
+            npm run lint
+            cd functions
+            npm run lint
+            cd ../
+
   preload:
     docker:
       - image: circleci/node:10.16.0
@@ -48,35 +77,6 @@ jobs:
             - functions/node_modules
           key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
 
-  lint:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
-      - run:
-          name: Linting
-          command: |
-            npm run lint
-            cd functions
-            npm run lint
-            cd ../
-
   build:
     docker:
       - image: circleci/node:10.16.0
@@ -113,6 +113,27 @@ jobs:
             - functions/lib
             - functions/dist
 
+  test:
+    docker:
+      - image: circleci/node:10.16.0
+
+      working_directory: ~/repo
+      steps:
+        - checkout
+
+        - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+        - attach_workspace:
+            at: .
+
+        - run:
+            name: Test Application
+            command: npm run test
+
   deploy:
     docker:
       - image: circleci/node:10.16.0
@@ -144,13 +165,16 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - preload
-      - lint:
-          requires:
-            - preload
-      - build:
+      - lint
+      - preload:
           requires:
             - lint
+      - build:
+          requires:
+            - preload
+      - test:
+          requires:
+            - build
       - deploy:
           requires:
             - build

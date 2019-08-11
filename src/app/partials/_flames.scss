@@ -1,0 +1,73 @@
+::ng-deep {
+  .aof-fire-animation {
+    &.aof-fire-large {
+      bottom: -180px;
+      opacity: .2;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      @media screen and (min-width: 960px) {
+        bottom: -240px;
+      }
+
+      @media screen and (min-width: 1280px) {
+        bottom: -300px;
+      }
+    }
+
+    &.aof-fire-medium {
+      opacity: .8;
+      left: 50%;
+      bottom: -100px;
+      transform: translate(-50%, -50%);
+
+      @media screen and (min-width: 960px) {
+        bottom: -150px;
+      }
+    }
+
+    &.aof-fire-small-one {
+      right: auto;
+      bottom: -80px;
+      opacity: .4;
+      z-index: 0 !important;
+      left: calc(50% - 50px);
+      transform: translate(-50%, -50%) rotate(-40deg) ;
+
+      @media screen and (min-width: 960px) {
+        bottom: -110px;
+        left: calc(50% - 50px);
+      }
+
+      @media screen and (min-width: 1280px) {
+        bottom: -130px;
+        left: calc(50% - 60px);
+      }
+    }
+
+    &.aof-fire-small-two {
+      right: auto;
+      bottom: -80px;
+      opacity: 0.4;
+      left: calc(50% + 50px);
+      transform: translate(-50%, -50%) rotate(40deg);
+
+      @media screen and (min-width: 960px) {
+        bottom: -110px;
+        left: calc(50% + 50px);
+      }
+
+      @media screen and (min-width: 1280px) {
+        bottom: -130px;
+        left: calc(50% + 60px);
+      }
+    }
+
+    &.aof-fire-small-center {
+      opacity: .4;
+      bottom: -50px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
