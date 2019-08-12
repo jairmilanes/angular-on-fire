@@ -52,11 +52,4 @@ app.get('*', (req, res) => {
   res.render('index', { req });
 });
 
-/* server.listen(PORT, () => {
-   console.log(`Node Express server listening on http://localhost:${PORT}`);
-}); */
-
-
-export {
-  app
-};
+export const server = app;

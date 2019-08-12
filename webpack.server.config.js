@@ -7,7 +7,7 @@ module.exports = {
   mode: 'none',
   entry: './server.ts',
   externals: {
-    './dist/server/main': 'require(\'./server/main\' )'
+    './dist/server/main': './server/main'
   },
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
@@ -17,9 +17,8 @@ module.exports = {
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),
-    // library: 'app',
-    // libraryTarget: 'umd',
-    // globalObject: 'typeof self !== \'undefined\' ? self : this',
+    library: 'app',
+    libraryTarget: 'umd',
     filename: 'index.js'
   },
   module: {
