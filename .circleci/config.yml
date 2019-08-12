@@ -117,28 +117,30 @@ jobs:
     docker:
       - image: circleci/node:10.16.0
 
-      working_directory: ~/repo
-      steps:
-        - checkout
+    working_directory: ~/repo
 
-        - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
+    steps:
+      - checkout
 
-        - attach_workspace:
-            at: .
+      - restore_cache:
+        name: Restoring app Dependencies from cache
+        keys:
+          - npm-deps-{{ checksum "package-lock.json" }}
+          - npm-deps-
 
-        - run:
-            name: Test Application
-            command: npm run test
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Test Application
+          command: npm run test
 
   deploy:
     docker:
       - image: circleci/node:10.16.0
 
     working_directory: ~/repo
+    
     steps:
       - checkout
 
