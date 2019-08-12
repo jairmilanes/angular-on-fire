@@ -12,9 +12,11 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors --display=minimal",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server && gulp copyBuildToFunctions",
     "build:client-and-server-bundles": "ng build --prod && ng run angular-on-fire:server:production --bundleDependencies all",
-    "serve": "npm run build:ssr && firebase serve"
+    "serve": "npm run build:ssr && firebase serve",
+    "serve:ssr": "node dist/index.js"
   },
   "private": true,
+  "engines": {    "node": "10"  },
   "dependencies": {
     "@angular/animations": "~8.1.1",
     "@angular/cdk": "^8.1.2",

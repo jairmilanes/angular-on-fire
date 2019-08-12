@@ -6,7 +6,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} fr
     template: `
         <div class="aof-flex-box" [ngClass]="classNames" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center">
             <figure *ngIf="image">
-                <img src="assets/{{image}}" [alt]="title" />
+                <img src="assets/{{image}}" [alt]="title || ''" />
             </figure>
             <div>
                 <h3 *ngIf="title">{{title}}</h3>

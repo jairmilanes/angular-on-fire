@@ -5,12 +5,9 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'none',
-  entry: {
-    // This is our Express server for Dynamic universal
-    server: './server.ts'
-  },
+  entry: './server.ts',
   externals: {
-    './dist/server/main': './server/main'
+    './dist/server/main': 'require(\'./server/main\' )'
   },
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
@@ -20,9 +17,10 @@ module.exports = {
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),
-    library: 'app',
-    libraryTarget: 'umd',
-    filename: '[name].js'
+    // library: 'app',
+    // libraryTarget: 'umd',
+    // globalObject: 'typeof self !== \'undefined\' ? self : this',
+    filename: 'index.js'
   },
   module: {
     noParse: /polyfills-.*\.js/,

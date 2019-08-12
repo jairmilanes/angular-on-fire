@@ -41,7 +41,7 @@ app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
 
 // Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
+// server.get('/api/**', (req, res) => { });
 // Serve static files from /browser
 app.get('*.*', express.static(DIST_FOLDER, {
   maxAge: '1y'
@@ -51,3 +51,12 @@ app.get('*.*', express.static(DIST_FOLDER, {
 app.get('*', (req, res) => {
   res.render('index', { req });
 });
+
+/* server.listen(PORT, () => {
+   console.log(`Node Express server listening on http://localhost:${PORT}`);
+}); */
+
+
+export {
+  app
+};
