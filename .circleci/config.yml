@@ -4,35 +4,6 @@
 #
 version: 2
 jobs:
-  lint:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
-      - run:
-          name: Linting
-          command: |
-            npm run lint
-            cd functions
-            npm run lint
-            cd ../
-
   preload:
     docker:
       - image: circleci/node:10.16.0
@@ -76,6 +47,35 @@ jobs:
           paths:
             - functions/node_modules
           key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+
+  lint:
+    docker:
+      - image: circleci/node:10.16.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
+
+      - restore_cache:
+          name: Restoring functions dependencies from cache
+          keys:
+            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - npm-functions-deps-
+
+      - run:
+          name: Linting
+          command: |
+            npm run lint
+            cd functions
+            npm run lint
+            cd ../
 
   build:
     docker:
@@ -167,13 +167,13 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - lint
-      - preload:
-          requires:
-            - lint
-      - build:
+      - preload
+      - lint:
           requires:
             - preload
+      - build:
+          requires:
+            - lint
       - test:
           requires:
             - build
