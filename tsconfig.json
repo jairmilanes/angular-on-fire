@@ -22,7 +22,8 @@
   "exclude": [
     "node_modules",
     "functions",
-    "cypress"
+    "cypress",
+    "**/*.spec.ts"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

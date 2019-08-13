@@ -8,6 +8,9 @@
       "dom",
       "es6"
     ],
+    "types": [
+      "node"
+    ],
     "experimentalDecorators": true
   },
   "include": [

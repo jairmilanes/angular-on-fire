@@ -1,0 +1,191 @@
+<div class="aof-page">
+    <app-jumbotron></app-jumbotron>
+
+    <app-content-section
+            name="tech"
+            title="Packet With Power"
+            description="Angular on Fire comes packet with the best tools in the Market, all pre-configured and ready to help you get started on your projects faster.">
+        <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="5%">
+            <app-flex-block
+                    fxFlex
+                    name="angular"
+                    image="angular-logo.png"
+                    title="Angular 8"
+                    content="All the latest features like web workers, deferential and improved lazy loading, Node 10 support and all the goodies Angular provides."
+            ></app-flex-block>
+
+            <app-flex-block
+                    fxFlex
+                    name="rxjs"
+                    image="rxjs-logo.png"
+                    title="RxJs 6"
+                    content="Take your projects to the next level with RxJs, the power of observables at your fingertips."
+            ></app-flex-block>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="5%">
+            <app-flex-block
+                    fxFlex
+                    name="firebase"
+                    image="firebase-logo.png"
+                    title="Firebase"
+                    content="The power of Firebase services at your disposal, file storage, object database, hosting, cloud functions and much more."
+            ></app-flex-block>
+
+            <app-flex-block
+                    fxFlex
+                    name="cypress"
+                    image="cypress-logo.png"
+                    title="Cypress"
+                    content="Cypress has taken the development community by storm, with it's great interface and ease to use apis, you can have your application tested in no time."
+            ></app-flex-block>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="5%">
+            <app-flex-block
+                    fxFlex
+                    name="jest"
+                    image="jest-logo.png"
+                    title="Jest"
+                    content="Test runner created by Facebook, widely used, vast documentation and community support."
+            ></app-flex-block>
+
+            <app-flex-block
+                    fxFlex
+                    name="circleci"
+                    image="circleci-logo.png"
+                    title="Ci/Cd Ready"
+                    content="Angular on Fire comes ready for ci/cd deployments with Circle CI, everything is pre-configured, all you have to do is link your Github account to Circle CI, push code and voalá!"
+            ></app-flex-block>
+        </div>
+    </app-content-section>
+
+    <app-content-section
+            name="docs"
+            title="Getting Started"
+            description="Get your Angular 8 project up and running in just a few minutes">
+        <div class="aof-doc-step">
+            <h3>Clone Angular On Fire</h3>
+            <p>Start by cloning Angular on Fire to a local directory:</p>
+            <app-code-block language="bash">
+                mkdir aof-project
+                cd aof-project
+                git clone https://github.com/layoutzweb/angular-on-fire.git .
+            </app-code-block>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Dependencies</h3>
+            <p>To install all dependencies we must run from the root:</p>
+            <app-code-block language="bash">
+                npm install
+            </app-code-block>
+
+            <p>and also from the functions directory:</p>
+            <app-code-block language="bash">
+                cd functions
+                npm install
+            </app-code-block>
+
+            <p>Make sure to navigate back to root for next steps:</p>
+            <app-code-block language="bash">
+                cd ../
+            </app-code-block>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Dev Server</h3>
+            <p>To start your local Angular dev server, run:</p>
+            <app-code-block language="bash">
+                npm start
+            </app-code-block>
+            <p>Then visit <a href="http://localhost:4200" rel="nofollow" target="_blank">http://localhost:4200</a> to see your application live.</p>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Prod Build</h3>
+            <p>To build your SSR version of the app, first build your main application:</p>
+            <app-code-block language="bash">
+                npm run build:ssr
+            </app-code-block>
+
+            <p>Then build your functions:</p>
+            <app-code-block language="bash">
+                cd functions
+                npm run build
+            </app-code-block>
+
+            <p>Then navigate back to root:</p>
+            <app-code-block language="bash">
+                cd ../
+            </app-code-block>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Prod Server</h3>
+            <p>To run your production server with server side rendering enabled, use:</p>
+            <app-code-block language="bash">
+                npm serve
+            </app-code-block>
+
+            <p>This uses Firebase emulation server to run your application through the <code>ssrServer</code> Cloud Function locally.</p>
+            <p>Visit <a href="http://localhost:5000" title="Local Angular On Fire" rel="nofollow" target="_blank">http://localhost:5000</a> to see your application live.</p>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Deploy</h3>
+            <p>Angular On Fire is pre-configured to be deployed to Firebase, but can also be deployed to other platforms.</p>
+            <h6>Create a Firebase Account</h6>
+            <p>Before you start, make sure you have created a Firebase account <a href="https://firebase.google.com" title="GooGle Firebase">here</a>, and a new Firebase project, here's a <a href="https://www.youtube.com/watch?v=6juww5Lmvgo" title="Creating your first project on Google Firebase" target="_blank">nice video tutorial</a> on how to do that. </p>
+
+            <h6>Configure your project id</h6>
+            <p>With your Firebase account and project ready, add your project id to the <code>./.firebaserc</code> file</p>
+            <app-code-block language="json">{{toString({
+                "projects": {
+                    "default": "my-project-id"
+                }
+            })}}</app-code-block>
+
+            <h6>Deploy your app</h6>
+            <p>Then deploy your app:</p>
+            <app-code-block language="bash">
+                firebase deploy
+            </app-code-block>
+
+            <p>Then visit your app url provided on Firebase console which looks something like <code>https://[YOUR APP ID].web.app/</code>.</p>
+            <p>You can also configure your own domain, to do so follow the steps in <a href="https://firebase.google.com/docs/hosting/custom-domain" title="Adding your custom domain to Google Firebase" target="_blank">here</a>.</p>
+        </div>
+
+        <div class="aof-doc-step">
+            <h3>Configure Ci/Cd</h3>
+            <p>Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away.</p>
+
+            <ul class="aof-list">
+                <li>If you haven't done so, go ahead and get a Circle CI free account <a href="https://circleci.com/integrations/github/" title="Github & Circle Ci Integration" target="_blank">here</a>, you can log in with your github account to make it even easier to configure.</li>
+                <li>Follow the steps to <a href="https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci" title="Setting up your build on Circle Ci" target="_blank">connect your Github account and link your project</a> to Circle Ci.</li>
+                <li>Make sure to skip file configuration steps since everything is already configured for you, all you need is to link your project to Circle Ci.</li>
+                <li>Then just push code to your repository, a siple commit is enough to trigger your build.</li>
+            </ul>
+        </div>
+    </app-content-section>
+
+
+    <app-content-section
+            name="docs"
+            title="Try It On StackBlitz">
+        <div class="aof-demo-container" fxLayout="row">
+            <iframe fxFlexFill src="https://stackblitz.com/github/layoutzweb/angular-on-fire?embed=1"></iframe>
+        </div>
+    </app-content-section>
+
+
+    <app-content-section
+            name="contributions"
+            title="Contributions"
+            description="Got some minutes to spare? Want to contribute to Angular On Fire?">
+        <p>There is always room for improvement, and we are always accepting pull requests bug fixes and improvements.</p>
+        <p>All you have to do is submit a PR following the guidelines in the template and we will take a look as son as we can.</p>
+    </app-content-section>
+
+    <app-footer></app-footer>
+</div>

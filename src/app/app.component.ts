@@ -1,5 +1,4 @@
-import {Component, AfterViewChecked} from '@angular/core';
-import {CodeHighlightService} from './services/highlight.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,23 +6,6 @@ import {CodeHighlightService} from './services/highlight.service';
   styleUrls: ['./app.component.scss'],
   preserveWhitespaces: true
 })
-export class AppComponent implements AfterViewChecked {
-
-  title = 'angular-on-fire';
-  highlighted: boolean;
-
-  constructor(private highlightService: CodeHighlightService) {}
-
-  ngAfterViewChecked() {
-    if (!this.highlighted) {
-      this.highlightService.highlightAll();
-      this.highlighted = true;
-    }
-  }
-
-  toString(object: any) {
-    return JSON.stringify(object, null, 4);
-  }
-}
+export class AppComponent {}
 
 

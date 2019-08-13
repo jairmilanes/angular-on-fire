@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "angular-on-fire-a631c"
+    "default": "angular-on-fire-a631c",
+    "staging": "angular-on-fire-staging"
   }
 }
