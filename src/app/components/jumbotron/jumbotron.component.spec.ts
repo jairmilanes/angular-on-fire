@@ -49,7 +49,13 @@ describe('Jumbotron', () => {
 
   it('should have a main action wth correct url', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.aof-jumbotron > div a').href)
-        .toEqual('https://github.com/layoutzweb/angular-on-fire');
+    expect(compiled.querySelectorAll('.aof-main-action').length)
+        .toEqual(2);
+    expect(compiled.querySelector(
+        '.aof-main-action[href=\'https://github.com/layoutzweb/angular-on-fire\']'
+    )).toBeTruthy();
+    expect(compiled.querySelector(
+        '.aof-main-action[href=\'https://stackblitz.com/github/layoutzweb/angular-on-fire\']'
+    )).toBeTruthy();
   });
 });
