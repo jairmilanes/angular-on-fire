@@ -16,6 +16,7 @@
  */
 
 import 'zone.js/dist/zone-node';
+import {IncomingMessage} from 'http';
 
 import * as express from 'express';
 import {join} from 'path';
@@ -48,8 +49,8 @@ app.get('*.*', express.static(DIST_FOLDER, {
 }));
 
 // All regular routes use the Universal engine
-app.get('*', (req, res) => {
-  res.render('index', { req });
+app.get('*', (req: IncomingMessage, res: express.Response) => {
+  res.render('template.html', { req });
 });
 
 export const server = app;
