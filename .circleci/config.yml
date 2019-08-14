@@ -123,10 +123,10 @@ jobs:
       - checkout
 
       - restore_cache:
-        name: Restoring app Dependencies from cache
-        keys:
-          - npm-deps-{{ checksum "package-lock.json" }}
-          - npm-deps-
+          name: Restoring app Dependencies from cache
+          keys:
+            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-
 
       - attach_workspace:
           at: .
