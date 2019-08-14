@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 import {defaults} from './shared';
 
-export const environment = { production: false, ...defaults };
+export const environment = { production: false, staging: false, ...defaults };
 
 /*
  * For easier debugging in development mode, you can import the following file
