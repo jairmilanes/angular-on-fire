@@ -88,6 +88,7 @@ Before you proceed here, make sure you have followed all the steps above to conf
 npm run build:ssr:prod
 ```  
 This will perform a few steps:
+
 * Build the Angular client application and place in `dist/browser`
 * Build the Angular server application and place it in `dist/server`
 * Build our SSR Express server and place in `dist/index.js`
@@ -103,13 +104,17 @@ project url, which looks something like `https://[YOUR PROJECT ID].web.app` or y
 
 ## Unit Tests  
 Angular On Fire uses Jest to run unit tests, you can start your tests by running:      
-`npm run test` 
+```bash
+npm run test
+``` 
 Visit [Jest](https://jestjs.io/docs/en/getting-started) documentation to learn more on how to create tests.  
   
   
 ## E2E Tests  
 E2e tests are managed by Cypress, to open the cypress console run:  
-`npm run e2e:open`  
+```bash
+npm run e2e:open
+```  
 Visit Cypress documentation site for more info on how to create e2e tests with Cypress.  
 
 ## Circle CI Integration
