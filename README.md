@@ -4,14 +4,77 @@ Base Angular, Firebase, Cypress and Jest project, it is set-up to be deployable 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8 with some minor adjustments to make it compatible with Firebase Cloud Functions.
 
 
-## Workflow
+## Getting Started
 
-### Dev server
+### Clone Angular On Fire
+Create a new directory if you haven't done so and clone Angular On Fire:
+```bash
+mkdir aof-project 
+cd aof-project 
+git clone https://github.com/layoutzweb/angular-on-fire.git .
+``` 
+
+### Install dependencies
+To install all dependencies yous must first run from the root:
+```bash
+npm install
+```
+
+and also from the functions directory:
+```bash
+cd functions
+npm install
+```
+
+Make sure to navigate back to root for next steps:
+```bash
+cd ../
+```
+
+### Run a dev server
 While developing locally, no server side rendering is needed, so to run a development server use:    
-`npm run start`  or `ng serve`  
-Navigate to `http://localhost:4200/` to see your app running.
-     
-    
+```bash
+npm start
+``` 
+or alternatively `ng serve`. Navigate to `http://localhost:4200/` to see your app running.
+
+
+
+## Firebase Integration
+Angular On FIre is by default built to work with Firebase services, out of the box it uses:
+- Hosting: This is where the client application will be served from
+- Cloud Functions: Hosts our server application, allowing for server side rendered pages 
+You can extend this integration with any Firebase service that meet your needs.
+
+
+### Running the Firebase Emulator
+To run your project as if it had been deployed to Firebase, with hosting and cloud functions emulated 
+by the firebase cli, run:
+```bash
+npm run emulator
+```
+This will serve your application in the Firebase dev emulator environment, which is the same as production but 
+with source maps enabled.
+
+
+### Deploying To Firebase
+Assuming you have created and configured your Firebase project id, follow these steps:
+
+#### Build for production
+```bash
+npm run build:ssr:prod 
+```
+This will build the application and server with pro
+
+#### Deploy to Firebase
+```bash
+firebase deploy
+```
+This will deploy to Firebase Hosting and Cloud Functions, making your application available at your firebase url
+project's url, which looks something like `https://[YOUR PROJECT ID].web.app` or your custom domain if you have 
+configured one.
+
+
 ### Production Server
 Serving a production version of the application is done using Firebase emulation, to do so run:   
 ```npm run serve```   
