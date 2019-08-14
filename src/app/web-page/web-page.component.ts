@@ -2,13 +2,14 @@ import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {CodeHighlightService} from '../services/highlight.service';
 import {Meta, Title} from '@angular/platform-browser';
 import {environment} from '../../environments/environment';
-
+import {MarkdownService} from 'ngx-markdown';
 
 
 @Component({
     selector: 'app-web-page',
     templateUrl: './web-page.component.html',
-    styleUrls: ['./web-page.component.scss']
+    styleUrls: ['./web-page.component.scss'],
+    preserveWhitespaces: true
 })
 export class WebPageComponent implements OnInit, AfterViewChecked {
 
@@ -22,15 +23,19 @@ export class WebPageComponent implements OnInit, AfterViewChecked {
             twitter: false
         }
     };
+    docsSource = 'https://raw.githubusercontent.com/layoutzweb/angular-on-fire/master/README.md';
+    docsMarkdown: string;
 
     constructor(private highlightService: CodeHighlightService,
                 private title: Title,
-                private meta: Meta) {
+                private meta: Meta,
+                private markdownService: MarkdownService) {
         this.config = {...this.defaults, ...(environment.page || {})};
     }
 
     ngOnInit(): void {
         this.seo();
+        this.docs();
     }
 
     ngAfterViewChecked() {
@@ -42,6 +47,16 @@ export class WebPageComponent implements OnInit, AfterViewChecked {
 
     toString(object: any) {
         return JSON.stringify(object, null, 4);
+    }
+
+    docs(): void {
+        this.markdownService.getSource(this.docsSource)
+            .subscribe(response => {
+                if (response) {
+                    const split = response.split('## Getting Started');
+                    this.docsMarkdown = split[1];
+                }
+            });
     }
 
     seo(): void {
