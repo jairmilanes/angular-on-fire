@@ -1,5 +1,4 @@
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {CodeHighlightService} from '../services/highlight.service';
+import {Component, OnInit} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {environment} from '../../environments/environment';
 import {MarkdownService} from 'ngx-markdown';
@@ -11,9 +10,8 @@ import {MarkdownService} from 'ngx-markdown';
     styleUrls: ['./web-page.component.scss'],
     preserveWhitespaces: true
 })
-export class WebPageComponent implements OnInit, AfterViewChecked {
+export class WebPageComponent implements OnInit {
 
-    highlighted: boolean;
     config: any;
     defaults = {
         title: 'Angular On Fire',
@@ -26,8 +24,7 @@ export class WebPageComponent implements OnInit, AfterViewChecked {
     docsSource = 'https://raw.githubusercontent.com/layoutzweb/angular-on-fire/master/README.md';
     docsMarkdown: string;
 
-    constructor(private highlightService: CodeHighlightService,
-                private title: Title,
+    constructor(private title: Title,
                 private meta: Meta,
                 private markdownService: MarkdownService) {
         this.config = {...this.defaults, ...(environment.page || {})};
@@ -36,13 +33,6 @@ export class WebPageComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void {
         this.seo();
         this.docs();
-    }
-
-    ngAfterViewChecked() {
-        if (!this.highlighted) {
-            this.highlightService.highlightAll();
-            this.highlighted = true;
-        }
     }
 
     toString(object: any) {
