@@ -49,8 +49,8 @@ or alternatively `ng serve`. Navigate to `http://localhost:4200/` to see your ap
   
 ## Firebase Integration  
 Angular On Fire is by default built to work with Firebase services, out of the box it uses:  
-- Hosting: This is where the client application will be served from  
-- Cloud Functions: Hosts our server application, allowing for server side rendered pages.
+- **Hosting**: This is where the client application will be served from  
+- **Cloud** Functions: Hosts our server application, allowing for server side rendered pages.
 
 You can extend this integration with any Firebase service that meet your needs as you build your project.  
 
@@ -72,6 +72,7 @@ A list with your existing projects will be available on your console, select the
 It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias.
 
 This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, meaning running commands like `firebase deploy`, will deploy to the current active project.
+
 Fore more info on the `use` command, checkout the Firebase cli reference page [here](https://firebase.google.com/docs/cli#add_a_project_alias).
   
 ### Running the Firebase Emulator  
@@ -127,7 +128,3 @@ This requires your project to be hosted on Github.
 -   Make sure to skip any project files configuration steps as everything is already configured for you, all you need to do is link your Github repo to Circle Ci.
 -   Then just push code to your repository, a siple commit is enough to trigger your build.
 
-
-  
-## Further help  
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
