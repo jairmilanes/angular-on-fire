@@ -123,8 +123,27 @@ Visit Cypress documentation site for more info on how to create e2e tests with C
 ## Circle CI Integration
 Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away.
 This requires your project to be hosted on Github.
--   If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
--   Follow the steps to  [connect your Github account and link your project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci "Setting up your build on Circle Ci")  to Circle Ci.
--   Make sure to skip any project files configuration steps as everything is already configured for you, all you need to do is link your Github repo to Circle Ci.
--   Then just push code to your repository, a siple commit is enough to trigger your build.
+
+#### Create a Circle CI account
+If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
+
+#### Link your Github Project
+Follow the steps to  [connect your Github account and link your project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci "Setting up your build on Circle Ci")  to Circle Ci.
+Make sure to skip any project files configuration steps as everything is already configured for you, all you need to do is link your Github repo to Circle Ci.
+
+#### Configure your CI Firebase Token
+In order to deploy to firebase from a CI environment, you must obtain a Firebase CI token, to do so run the following command in your console:
+```bash
+firebase login:ci
+```
+A browser window will pop-up so you can authenticate your Firebase account, once that is done, look in the command line to find your newly generated CI token.
+Copy the token string and create a new environment variable named `FIREBASE_CI_TOKEN`, with the generated token string as a value.
+More info on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
+
+#### Push code to your master branch
+Now all it's left to do is pushing code to your master branch, the ci workflow will start automatically and you can follow their progress in your Circle CI dashboard.
+
+#### Notes
+The goal of this integration was to get you up and running with CI easily, you will need to extend this configuration as 
+your project evolves so we left for you to decide how to scale.
 
