@@ -56,6 +56,7 @@ You can extend this integration with any Firebase service that meet your needs a
 
 ### Creating a Firebase Project
 If you haven't done so, start by creating a Firebase account [here](https://firebase.google.com/ "Google Firebase"), and follow by creating a new Firebase project, here's a  [nice video tutorial](https://www.youtube.com/watch?v=6juww5Lmvgo "Creating your first project on Google Firebase") on how to do that to help you get started.
+
 With your project created, login to Firebase in your console so you can have access to your cloud projects from your local machine:
 ```bash
 firebase login
@@ -69,6 +70,7 @@ firebase use --add
 ```
 A list with your existing projects will be available on your console, select the name of your project in the list and press enter.
 It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias.
+
 This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, meaning running commands like `firebase deploy`, will deploy to the current active project.
 Fore more info on the `use` command, checkout the Firebase cli reference page [here](https://firebase.google.com/docs/cli#add_a_project_alias).
   
