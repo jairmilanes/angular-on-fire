@@ -162,7 +162,7 @@ jobs:
       - run:
           name: Deploying to Firebase
           command: |
-            ./node_modules/.bin/firebase use default
+            ./node_modules/.bin/firebase use default --token "$FIREBASE_CI_TOKEN"
             ./node_modules/.bin/firebase deploy --only functions:dashfyWebsiteSsrServer,hosting --token "$FIREBASE_CI_TOKEN"
 
 workflows:
