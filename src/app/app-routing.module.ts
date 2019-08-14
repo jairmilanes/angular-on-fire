@@ -1,11 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {WebPageComponent} from './web-page/web-page.component';
+import {PageNotFoundComponent} from './web-page/page/not-found/not-found.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        loadChildren: () => import('./web-page/web-page.module').then(m => m.WebPageModule)
+        component: WebPageComponent
+    },
+    {
+        path: '*',
+        component: PageNotFoundComponent
     }
 ];
 

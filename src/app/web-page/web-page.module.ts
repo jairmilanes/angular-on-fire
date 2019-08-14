@@ -12,29 +12,32 @@ import {CodeHighlightService} from '../services/highlight.service';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faGithubAlt, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
 import {WebPageComponent} from './web-page.component';
-import {WebPageRoutingModule} from './web-page-routing.module';
+import {PageNotFoundComponent} from './page/not-found/not-found.component';
 
 
 @NgModule({
     declarations: [
         WebPageComponent,
+        PageNotFoundComponent,
         ContentSectionComponent,
         FlamesComponent,
         FlexBlockComponent,
         FooterComponent,
         JumbotronComponent,
-        CodeBlockComponent,
+        CodeBlockComponent
     ],
     imports: [
         CommonModule,
         FlexLayoutModule,
-        FontAwesomeModule,
-        WebPageRoutingModule
+        FontAwesomeModule
     ],
     providers: [
         CodeHighlightService
     ],
-    bootstrap: [WebPageComponent]
+    exports: [
+        WebPageComponent,
+        PageNotFoundComponent
+    ]
 })
 export class WebPageModule {
     constructor() {
