@@ -2,6 +2,10 @@
 # Angular On Fire
 #### Base Angular, Firebase, Cypress and Jest project, it is set-up to be deployable to firebase hosting/functions with Server Side Rendering.  
   
+![CircleCI](https://img.shields.io/circleci/build/github/layoutzweb/angular-on-fire/master?token=27358c4c9121c5d4f49943e679e2c6d30b31f8a2)
+![CircleCI](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
+
+  
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8 with some minor adjustments to make it compatible with Firebase Cloud Functions.  
   
   
@@ -69,7 +73,8 @@ To deploy or perform any action on your Firebase, we first must select a project
 firebase use --add
 ```
 A list with your existing projects will be available on your console, select the name of your project in the list and press enter.
-It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias.
+
+It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias. The `default` alias is required if you are using Circle Ci for deployments.
 
 This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, meaning running commands like `firebase deploy`, will deploy to the current active project.
 
@@ -122,7 +127,9 @@ Visit Cypress documentation site for more info on how to create e2e tests with C
 
 ## Circle CI Integration
 Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away.
-This requires your project to be hosted on Github.
+This will require your project to be hosted on Github, the default Circle CI configuration can be found at `.circleci/config.yml`.
+
+Follow the below steps to get started with automated deployments.
 
 #### Create a Circle CI account
 If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
@@ -132,11 +139,15 @@ Follow the steps to  [connect your Github account and link your project](https:/
 Make sure to skip any project files configuration steps as everything is already configured for you, all you need to do is link your Github repo to Circle Ci.
 
 #### Configure your CI Firebase Token
-In order to deploy to firebase from a CI environment, you must obtain a Firebase CI token, to do so run the following command in your console:
+In order to build or deploy from a CI environment, you must obtain a Firebase CI token, to do so run the following command in your console:
 ```bash
 firebase login:ci
 ```
 A browser window will pop-up so you can authenticate your Firebase account, once that is done, look in the command line to find your newly generated CI token.
+
+Head to your Circle CI dashboard, and create 2 new environment variables:
+* FIREBASE_DEFAULT_PROJECT_ID Your production
+* FIREBASE_CI_TOKEN
 Copy the token string and create a new environment variable named `FIREBASE_CI_TOKEN`, with the generated token string as a value.
 More info on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
 

@@ -1,3 +1,21 @@
+
+restore_main_dependencies: &restore_main_dependencies
+  name: Restoring app Dependencies from cache
+  keys:
+    - npm-deps-{{ checksum "package-lock.json" }}
+    - npm-deps-
+
+restore_functions_dependencies: &restore_functions_dependencies
+  name: Restoring functions dependencies from cache
+  keys:
+    - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+    - npm-functions-deps-
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.16.0
+  working_directory: ~/repo
+
 # Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
@@ -5,26 +23,11 @@
 version: 2
 jobs:
   preload:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
       - run:
           name: Updating dependencies
           command: CYPRESS_INSTALL_BINARY=0 npm i
@@ -49,26 +52,11 @@ jobs:
           key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
 
   lint:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
       - run:
           name: Linting
           command: |
@@ -78,26 +66,11 @@ jobs:
             cd ../
 
   build:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
       - run:
           name: Building application
           command: |
@@ -114,20 +87,11 @@ jobs:
             - functions/dist
 
   test:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
       - attach_workspace:
           at: .
 
@@ -136,40 +100,42 @@ jobs:
           command: npm run test
 
   deploy:
-    docker:
-      - image: circleci/node:10.16.0
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          name: Restoring app Dependencies from cache
-          keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
-            - npm-deps-
-
-      - restore_cache:
-          name: Restoring functions dependencies from cache
-          keys:
-            - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-            - npm-functions-deps-
-
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
       - attach_workspace:
           at: .
 
       - run:
           name: Deploying to Firebase
           command: |
-            ./node_modules/.bin/firebase use default --token "$FIREBASE_CI_TOKEN"
-            ./node_modules/.bin/firebase deploy --only functions:dashfyWebsiteSsrServer,hosting --token "$FIREBASE_CI_TOKEN"
+            ./node_modules/.bin/firebase use $FIREBASE_DEFAULT_PROJECT_ID --alias default
+            ./node_modules/.bin/firebase deploy --only functions:ssrServer,hosting --token "$FIREBASE_CI_TOKEN"
 
 workflows:
   version: 2
-  deploy:
+  build:
     jobs:
       - preload
+      - lint:
+          requires:
+            - preload
+      - build:
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
+  deploy:
+    jobs:
+      - preload:
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /.*/
       - lint:
           requires:
             - preload
