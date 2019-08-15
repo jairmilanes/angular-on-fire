@@ -1,22 +1,10 @@
-const { src, dest } = require('gulp');
-const del = require('del')
+const usage = require('gulp-help-doc');
 
 function help() {
-    console.log('Help Gulp');
+    return usage(require('gulp'));
 }
 
-/**
- * Copies the current build from `./dist` tot the `./functions/dist` folder
- * so it can be deployed to cloud functions
- *
- * @return {Promise}
- */
-function copyBuildToFunctions() {
-    del.sync('functions/dist/**', {force: true});
-
-    return src('dist/**')
-        .pipe(dest('functions/dist/'));
-}
-
-exports.default  = help;
-exports.copyBuildToFunctions = copyBuildToFunctions;
+exports.default = help;
+exports.help = help;
+exports.copyBuildToFunctions = require('./tasks/copy-build-to-functions').copyBuildToFunctions;
+exports.release = require('./tasks/release-automation').release
