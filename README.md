@@ -187,7 +187,8 @@ Angular On Fire uses Jest to run unit tests, you can start your tests by running
 ```bash
 npm run test
 ``` 
-Visit [Jest](https://jestjs.io/docs/en/getting-started) documentation to learn more on how to create tests.  
+Visit [Jest](https://jestjs.io/docs/en/getting-started) documentation to learn more on how to create and run tests with Jets.
+Visit the [Angular Testing Guide](https://angular.io/guide/testing) to lerna more about Angular tests.  
   
   
 ## [E2E Tests](#e2e-tests)  
@@ -195,4 +196,4 @@ E2e tests are managed by Cypress, to open the cypress console run:
 ```bash
 npm run e2e:open
 ```  
-Visit Cypress documentation site for more info on how to create e2e tests with Cypress.  
+Visit [Cypress documentation](https://docs.cypress.io/guides/overview/why-cypress.html) site for more info on how to create e2e tests with Cypress.  
