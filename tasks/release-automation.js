@@ -18,6 +18,8 @@ const git = require('gulp-git');
 const fs = require('fs');
 const PluginError = require('plugin-error');
 const minimist = require('minimist');
+const debug = require('debug');
+debug.enable('conventional-github-releaser');
 
 const defaults = {
     type: 'patch',
