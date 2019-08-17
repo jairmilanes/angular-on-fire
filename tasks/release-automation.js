@@ -23,15 +23,18 @@ const defaults = {
     type: 'patch',
     manifest: './package.json',
     changelog: './CHANGELOG.md',
-    branch: 'master'
+    branch: 'master',
+    url: 'https://api.github.com'
 };
 const {
     type,
     manifest,
     changelog,
-    token
+    token,
+    branch,
+    url
 } = minimist(process.argv.slice(2), {
-    string: ['type', 'manifest', 'changelog', 'token', 'branch'],
+    string: ['type', 'manifest', 'changelog', 'token', 'branch', 'url'],
     default: defaults
 });
 const {GITHUB_TOKEN} = process.env;
@@ -75,30 +78,20 @@ function commit() {
 }
 
 function push(done) {
-    git.push('origin', 'master', done);
+    git.push('origin', branch, {args: '--tags'}, done);
 }
 
 function addTag(done) {
-    const version = getPackageJsonVersion();
-    git.tag(version, 'Created Tag for version: ' + version, function (error) {
-        if (error) {
-            return done(error);
-        }
-        git.push('origin', 'next', {args: '--tags'}, done);
-    });
-
-    function getPackageJsonVersion () {
-        // We parse the json file instead of using require because require caches
-        // multiple calls so the version number won't be updated
-        return JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
-    }
+    // We parse the json file instead of using require because require caches
+    // multiple calls so the version number won't be updated
+    const version = JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
+    git.tag(version, 'Created Tag for version: ' + version, done);
 }
 
 function release(done) {
     conventionalGithubReleaser({
-        type: "oauth",
         token: token || GITHUB_TOKEN,
-        url: 'https://api.github.com'
+        url: branch
     }, {
         preset: 'angular' // Or to any other commit message convention you use.
     }, done);
@@ -107,9 +100,9 @@ function release(done) {
 exports.release = series(
     checkContext,
     bumpVersion,
-    // changeLog,
+    changeLog,
     commit,
-    // push,
     addTag,
+    push,
     release
 );
