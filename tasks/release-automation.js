@@ -85,7 +85,7 @@ function addTag(done) {
         if (error) {
             return done(error);
         }
-        git.push('origin', 'master', {args: '--tags'}, done);
+        git.push('origin', 'next', {args: '--tags'}, done);
     });
 
     function getPackageJsonVersion () {
