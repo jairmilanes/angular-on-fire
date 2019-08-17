@@ -7,4 +7,5 @@ function help() {
 exports.default = help;
 exports.help = help;
 exports.copyBuildToFunctions = require('./tasks/copy-build-to-functions').copyBuildToFunctions;
-exports.release = require('./tasks/release-automation').release
+exports.release = require('./tasks/release-automation').release;
+exports.clearReleases = require('./tasks/clear-releases').clearReleases;

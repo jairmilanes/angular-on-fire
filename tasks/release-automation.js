@@ -20,12 +20,12 @@ const PluginError = require('plugin-error');
 const minimist = require('minimist');
 
 const defaults = {
-    type: 'patch',
-    manifest: './package.json',
-    changelog: './CHANGELOG.md',
-    branch: 'master',
-    url: 'https://api.github.com'
-};
+        type: 'patch',
+        manifest: './package.json',
+        changelog: './CHANGELOG.md',
+        branch: 'master',
+        url: 'https://api.github.com'
+    };
 const {
     type,
     manifest,
