@@ -108,9 +108,9 @@ function release(done) {
 exports.release = series(
     checkContext,
     bumpVersion,
-    changeLog,
+    // changeLog,
     commit,
-    push,
+    // push,
     addTag,
     release
 );
