@@ -18,13 +18,12 @@ const git = require('gulp-git');
 const fs = require('fs');
 const PluginError = require('plugin-error');
 const minimist = require('minimist');
-const debug = require('debug');
-debug.enable('conventional-github-releaser');
 
 const defaults = {
     type: 'patch',
     manifest: './package.json',
-    changelog: './CHANGELOG.md'
+    changelog: './CHANGELOG.md',
+    branch: 'master'
 };
 const {
     type,
@@ -32,7 +31,7 @@ const {
     changelog,
     token
 } = minimist(process.argv.slice(2), {
-    string: ['type', 'manifest', 'changelog', 'token'],
+    string: ['type', 'manifest', 'changelog', 'token', 'branch'],
     default: defaults
 });
 const {GITHUB_TOKEN} = process.env;
