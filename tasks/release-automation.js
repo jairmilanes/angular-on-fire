@@ -7,6 +7,12 @@
  * - commit and push all changes
  *
  * @task {release}
+ * @arg {token} A Github personal access token, can also be set as an environment variable named GITHUB_TOKEN
+ * @arg {branch} (optional) The branch to push the changes to, defaults to 'master'.
+ * @arg {type} (optional) The release type, one of prerelease, patch, minor, major. Defaults to 'patch'.
+ * @arg {manifest} (optional) Path to the package.json file. Defaults to './package.json'
+ * @arg {changelog} (optional) Path to the CHANGELOG.md file. Defaults to './CHANGELOG.md'
+ * @arg {url} (optional) The fully qualified domain name for the GitHub instance. Defaults to 'https://api.github.com'
  */
 
 const { src, dest, series } = require('gulp');
@@ -19,19 +25,32 @@ const fs = require('fs');
 const PluginError = require('plugin-error');
 const minimist = require('minimist');
 
+// Default option values
 const defaults = {
-    type: 'patch',
-    manifest: '../package.json',
-    changelog: '../CHANGELOG.md'
-};
+        type: 'patch',
+        manifest: './package.json',
+        changelog: './CHANGELOG.md',
+        branch: 'master',
+        url: 'https://api.github.com'
+    };
 const {
     type,
     manifest,
     changelog,
-    token
-} = minimist(process.argv.slice(2), defaults);
+    token,
+    branch,
+    url
+} = minimist(process.argv.slice(2), {
+    string: ['type', 'manifest', 'changelog', 'token', 'branch', 'url'],
+    default: defaults
+});
 const {GITHUB_TOKEN} = process.env;
 
+
+/**
+ * Check if all necessary arguments are set
+ * @param done
+ */
 function checkContext(done) {
     if (!(token || GITHUB_TOKEN) || !manifest || !changelog) {
         done(new PluginError(
@@ -44,6 +63,10 @@ function checkContext(done) {
     done();
 }
 
+/**
+ * Bumps the manifest version based on release type
+ * @return {*}
+ */
 function bumpVersion() {
     return src(manifest)
         .pipe(bump({type}))
@@ -54,6 +77,10 @@ function bumpVersion() {
         .pipe(dest('./'));
 }
 
+/**
+ * Updates the changelog file with an auto generated entry.
+ * @return {*}
+ */
 function changeLog() {
     return src(changelog, {
         buffer: false
@@ -64,36 +91,43 @@ function changeLog() {
         .pipe(dest('./'));
 }
 
+/**
+ * Commit pending changes to the repository
+ * @return {*}
+ */
 function commit() {
     return src('.')
         .pipe(git.add())
         .pipe(git.commit('[Prerelease] Bumped version number'));
 }
 
-function push(done) {
-    git.push('origin', 'master', done);
-}
-
+/**
+ * Adds a tag with the current manifest version
+ * @param done
+ */
 function addTag(done) {
-    const version = getPackageJsonVersion();
-    git.tag(version, 'Created Tag for version: ' + version, function (error) {
-        if (error) {
-            return done(error);
-        }
-        git.push('origin', 'master', {args: '--tags'}, done);
-    });
-
-    function getPackageJsonVersion () {
-        // We parse the json file instead of using require because require caches
-        // multiple calls so the version number won't be updated
-        return JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
-    }
+    // We parse the json file instead of using require because require caches
+    // multiple calls so the version number won't be updated
+    const version = JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
+    git.tag(version, 'Created Tag for version: ' + version, done);
 }
 
+/**
+ * Pushes pending commits to the repository
+ * @param done
+ */
+function push(done) {
+    git.push('origin', branch, {args: '--tags'}, done);
+}
+
+/**
+ * Creates a new Github release
+ * @param done
+ */
 function release(done) {
     conventionalGithubReleaser({
-        type: "oauth",
-        token: token || GITHUB_TOKEN // change this to your own GitHub token or use an environment variable
+        token: token || GITHUB_TOKEN,
+        url: url
     }, {
         preset: 'angular' // Or to any other commit message convention you use.
     }, done);
@@ -104,7 +138,7 @@ exports.release = series(
     bumpVersion,
     changeLog,
     commit,
-    push,
     addTag,
+    push,
     release
 );
