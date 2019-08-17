@@ -8,40 +8,13 @@
 @import '../partials/flames';
 @import '../partials/list';
 @import '../partials/docs';
+@import '../partials/tech';
 
-$accentColor: #E3740F;
-
-.aof-tech-section {
-  h2 {
-    color: $accentColor;
-  }
-}
 
 .aof-demo-container {
   height: 500px;
 }
 
-.aof-context-menu {
-  h3 {
-    margin: 0 0 15px 0;
-  }
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 
-    li {
-      margin-bottom: 0;
-      a {
-        line-height: 32px;
-        text-decoration: none;
-        color: black;
 
-        &:hover {
-          color: $accentColor;
-        }
-      }
-    }
-  }
-}

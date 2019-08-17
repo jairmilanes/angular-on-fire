@@ -43,7 +43,7 @@ Make sure to navigate back to root for next steps:
 cd ../
 ```      
   
-### [Run the dev server](#getting-started-dev-server)  
+### [Run a dev server](#getting-started-dev-server)  
 While developing locally, no server side rendering is needed, so run a development server using:      
 ```bash  
 npm start
@@ -145,7 +145,41 @@ your project evolves so we left for you to decide how to scale.
 
 
 ## [Release Automation](#release-automation)
-Angular On Fire provides a couple of gulp tasks to help you automate your release process,  
+Angular On Fire provides a Gulp task to help you automate your release process, it uses 
+<a href="https://www.npmjs.com/package/conventional-changelog" target="_blank">Conventional Changelog</a> and 
+<a href="https://www.npmjs.com/package/conventional-github-releaser" target="_blank">Conventional Github Releaser</a> 
+along with other gulp helpers to:
+* Bump your project version based on the release type (patch, minor, major, etc..)
+* Update your change log with a new release
+* Create a release tag based on the updated version
+* Push th new release to Github
+
+To perform a release make sure:
+* your current branch is set to master
+* commit and push any pending changes
+* have a Github Personal Access Token in hand, you can create one [here](https://github.com/settings/tokens).
+
+With the token in hands, run one of the pre-configured npm scripts:
+
+```bash
+npm run release:pre -- --token [YOUR GITHUB TOKEN]
+```
+For a pre-release version and tag (0.0.1-1).
+
+```bash
+npm run release:patch -- --token [YOUR GITHUB TOKEN]
+```
+For a patch version and tag (0.0.1).
+
+```bash
+npm run release:minor -- --token [YOUR GITHUB TOKEN]
+```
+For a minor version and tag (0.1.0).
+
+```bash
+npm run release:major -- --token [YOUR GITHUB TOKEN]
+```
+For a major version and tag (1.0.0).
 
 
 ## [Unit Tests](#unit-tests)  
