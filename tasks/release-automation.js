@@ -21,15 +21,18 @@ const minimist = require('minimist');
 
 const defaults = {
     type: 'patch',
-    manifest: '../package.json',
-    changelog: '../CHANGELOG.md'
+    manifest: './package.json',
+    changelog: './CHANGELOG.md'
 };
 const {
     type,
     manifest,
     changelog,
     token
-} = minimist(process.argv.slice(2), defaults);
+} = minimist(process.argv.slice(2), {
+    string: ['type', 'manifest', 'changelog', 'token'],
+    default: defaults
+});
 const {GITHUB_TOKEN} = process.env;
 
 function checkContext(done) {
