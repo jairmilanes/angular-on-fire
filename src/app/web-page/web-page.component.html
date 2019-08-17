@@ -64,7 +64,24 @@
             name="docs"
             title="Getting Started"
             description="Get your Angular 8 project up and running in just a few minutes">
-        <markdown [data]="docsMarkdown" lineNumbers></markdown>
+        <div fxLayout="row" fxLayoutGap="40px">
+            <div fxFlex="180px" class="aof-context-menu">
+                <h3>Topics</h3>
+                <div>
+                    <ul>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#firebase-integration">Firebase Integration</a></li>
+                        <li><a href="#circle-ci-integration">Circle CI Integration</a></li>
+                        <li><a href="#release-automation">Release Automation</a></li>
+                        <li><a href="#unit-tests">Unit Tests</a></li>
+                        <li><a href="#e2e-tests">E2E Tests</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div fxFlex>
+                <markdown [data]="docsMarkdown" lineNumbers></markdown>
+            </div>
+        </div>
     </app-content-section>
 
     <app-content-section
