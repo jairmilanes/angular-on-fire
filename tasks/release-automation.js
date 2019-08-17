@@ -91,7 +91,7 @@ function addTag(done) {
 function release(done) {
     conventionalGithubReleaser({
         token: token || GITHUB_TOKEN,
-        url: branch
+        url: url
     }, {
         preset: 'angular' // Or to any other commit message convention you use.
     }, done);

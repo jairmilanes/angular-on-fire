@@ -1,6 +1,6 @@
 {
   "name": "angular-on-fire",
-  "version": "0.0.1-13",
+  "version": "0.0.1-14",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
