@@ -1,0 +1,14 @@
+@import '../../partials/colors';
+
+.aof-scroll-top {
+  position: fixed;
+  right: 50px;
+  bottom: 15px;
+  font-size: 42px;
+  font-weight: 900;
+
+
+  a {
+    color: $primaryColor;
+  }
+}

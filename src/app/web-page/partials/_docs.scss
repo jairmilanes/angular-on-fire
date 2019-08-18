@@ -1,8 +1,7 @@
-$accentColor: #e32b0a;
-
+@import '../partials/colors';
 
 ::ng-deep {
-  .aof-docs-section {
+  .aof-documentation-section {
     background-color: #e8e8e8;
 
     code {
@@ -16,6 +15,7 @@ $accentColor: #e32b0a;
     h2 {
       font-size: 36px;
       margin-top: 50px;
+      color: $primaryColor;
     }
 
     h3 {
@@ -68,7 +68,7 @@ $accentColor: #e32b0a;
         color: black;
 
         &:hover {
-          color: $accentColor;
+          color: $primaryColor;
         }
       }
     }

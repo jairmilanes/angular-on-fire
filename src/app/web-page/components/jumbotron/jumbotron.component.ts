@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, HostListener, OnChanges, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostListener,
+    Input,
+    ViewEncapsulation
+} from '@angular/core';
 
 
 @Component({
@@ -8,19 +15,17 @@ import {ChangeDetectionStrategy, Component, HostListener, OnChanges, ViewEncapsu
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class JumbotronComponent implements OnChanges {
+export class JumbotronComponent {
 
-    innerHeight: number;
+    @Input() name: string;
+
+    innerHeight: number = window.innerHeight;
+
+    constructor(public element: ElementRef) {}
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.innerHeight = window.innerHeight;
-    }
-
-    ngOnChanges() {
-        if (window) {
-            this.innerHeight = window.innerHeight;
-        }
     }
 }
 

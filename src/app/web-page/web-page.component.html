@@ -1,5 +1,5 @@
-<div class="aof-page">
-    <app-jumbotron></app-jumbotron>
+<div class="aof-page" scroll-directive>
+    <app-jumbotron name="page-top" #jumbotronRef></app-jumbotron>
 
     <app-content-section
             name="tech"
@@ -61,16 +61,17 @@
     </app-content-section>
 
     <app-content-section
-            name="docs"
+            #documentation
+            name="documentation"
             title="Getting Started"
-            description="Get your Angular 8 project up and running in just a few minutes">
+            description="Get your Angular project up and running in just a few minutes">
         <div class="aof-docs-container" fxLayout="row" fxLayoutGap="60px">
             <div fxFlex="180px">
 
                 <div class="aof-docs-context-menu">
                     <h3>Topics</h3>
                     <ul>
-                        <li><a href="#aof-docs-section">Getting Started</a></li>
+                        <li><a href="#documentation">Getting Started</a></li>
                         <li><a href="#firebase-integration">Firebase Integration</a></li>
                         <li><a href="#circle-ci-integration">Circle CI Integration</a></li>
                         <li><a href="#release-automation">Release Automation</a></li>
@@ -94,4 +95,6 @@
     </app-content-section>
 
     <app-footer></app-footer>
+
+    <app-scroll-top [target]="jumbotronRef.element"></app-scroll-top>
 </div>

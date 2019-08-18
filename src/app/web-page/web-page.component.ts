@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {environment} from '../../environments/environment';
 import {MarkdownService} from 'ngx-markdown';
+import {JumbotronComponent} from './components/jumbotron/jumbotron.component';
 
 
 @Component({
@@ -11,6 +12,9 @@ import {MarkdownService} from 'ngx-markdown';
     preserveWhitespaces: true
 })
 export class WebPageComponent implements OnInit {
+
+    @ViewChild('jumbotronRef', {static: true}) jumbotronRef: JumbotronComponent;
+    @ViewChild('documentation', {static: true}) documentationRef: JumbotronComponent;
 
     config: any;
     defaults = {
@@ -35,15 +39,14 @@ export class WebPageComponent implements OnInit {
         this.docs();
     }
 
-    toString(object: any) {
+    toString(object: any): string {
         return JSON.stringify(object, null, 4);
     }
+
 
     docs(): void {
         this.markdownService.getSource(this.docsSource)
             .subscribe(response => {
-
-                console.log(response);
                 if (response) {
                     const split = response.split('## [Getting Started](#getting-started)');
                     this.docsMarkdown = split[1];

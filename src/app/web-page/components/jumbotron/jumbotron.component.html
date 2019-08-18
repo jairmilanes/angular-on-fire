@@ -1,4 +1,6 @@
-<section class="aof-jumbotron" [ngStyle]="{height: innerHeight + 'px'}">
+<section [id]="name" class="aof-jumbotron" [ngStyle]="{height: innerHeight + 'px'}">
+    <div class="aof-jumbotron-background"></div>
+    <div class="aof-jumbotron-bottom-frame" inlineSVG="/assets/jumbotron-bottom-frame.svg"></div>
     <div class="aof-angular-logo">
         <app-flames size="large" speed="slow"></app-flames>
         <app-flames size="medium"></app-flames>
@@ -14,6 +16,9 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
             <a class="aof-main-action" href="https://github.com/layoutzweb/angular-on-fire" title="See Angular On Fire on Github" target="_blank">
                 View It On <strong>Github</strong>
+            </a>
+            <a class="aof-main-action" href="#documentation" title="Angular On Fire Documentation">
+                <strong>Documentation</strong>
             </a>
         </div>
     </div>
