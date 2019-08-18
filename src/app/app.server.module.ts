@@ -3,7 +3,6 @@ import { ServerModule } from '@angular/platform-server';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { APP_BASE_HREF } from '@angular/common';
-// import { InlineSVGConfig } from 'ng-inline-svg';
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
