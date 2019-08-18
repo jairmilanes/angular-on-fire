@@ -17,6 +17,10 @@
     "build:ssr": "npm run build && npm run compile:server && gulp copyBuildToFunctions",
     "build:ssr:prod": "npm run build:prod && npm run compile:server && gulp copyBuildToFunctions",
     "emulator": "npm run build:ssr && firebase serve",
+    "release:pre": "gulp release --type prerelease",
+    "release:patch": "gulp release --type patch",
+    "release:minor": "gulp release --type minor",
+    "release:major": "gulp release --type minor",
     "ssr": "node dist/index.js"
   },
   "engines": {

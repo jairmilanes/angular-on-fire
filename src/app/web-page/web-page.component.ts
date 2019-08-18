@@ -21,7 +21,7 @@ export class WebPageComponent implements OnInit {
             twitter: false
         }
     };
-    docsSource = 'https://raw.githubusercontent.com/layoutzweb/angular-on-fire/master/README.md';
+    docsSource = 'https://raw.githubusercontent.com/layoutzweb/angular-on-fire/next/README.md';
     docsMarkdown: string;
 
     constructor(private title: Title,
@@ -42,8 +42,10 @@ export class WebPageComponent implements OnInit {
     docs(): void {
         this.markdownService.getSource(this.docsSource)
             .subscribe(response => {
+
+                console.log(response);
                 if (response) {
-                    const split = response.split('## Getting Started');
+                    const split = response.split('## [Getting Started](#getting-started)');
                     this.docsMarkdown = split[1];
                 }
             });

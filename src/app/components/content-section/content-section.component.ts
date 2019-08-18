@@ -4,7 +4,7 @@ import {Component, Input} from '@angular/core';
 @Component({
     selector: 'app-content-section',
     template: `
-        <section class="aof-section aof-{{name}}-section" fxLayout="row" fxLayoutAlign="center center">
+        <section id="aof-{{name}}-section" class="aof-section aof-{{name}}-section" fxLayout="row" fxLayoutAlign="center center">
             <div class="aof-section-container" fxFlex fxFlex.gt-sm="960px">
                 <h2 *ngIf="title">{{title}}</h2>
                 <p *ngIf="description">{{description}}</p>

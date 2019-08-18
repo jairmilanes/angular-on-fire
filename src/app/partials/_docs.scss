@@ -1,3 +1,6 @@
+$accentColor: #e32b0a;
+
+
 ::ng-deep {
   .aof-docs-section {
     background-color: #e8e8e8;
@@ -17,12 +20,57 @@
 
     h3 {
       font-size: 22px;
-      margin-top: 50px;
+      margin-top: 40px;
     }
 
     h4 {
       font-size: 18px;
       margin-top: 30px;
+    }
+
+    h3, h4 {
+      opacity: .8;
+      margin-bottom: 10px;
+    }
+
+    h2, h3, h4 {
+      & > a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+  }
+}
+
+.aof-docs-container {
+  position: relative;
+}
+
+.aof-docs-context-menu {
+  position: sticky;
+  top: 0;
+  padding-top: 30px;
+
+  h3 {
+    margin: 0 0 15px 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0;
+      a {
+        line-height: 42px;
+        text-decoration: none;
+        color: black;
+
+        &:hover {
+          color: $accentColor;
+        }
+      }
     }
   }
 }
