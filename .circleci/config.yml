@@ -108,7 +108,7 @@ jobs:
       - attach_workspace:
           at: .
 
-      - run:
+      - deploy:
           name: Deploying to Firebase
           command: |
             ./node_modules/.bin/firebase use $FIREBASE_DEFAULT_PROJECT_ID --alias default --token "$FIREBASE_CI_TOKEN"
