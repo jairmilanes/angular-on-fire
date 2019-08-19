@@ -1,9 +1,13 @@
 
-# Angular On Fire
-#### Base Angular, Firebase, Cypress and Jest project, it is set-up to be deployable to firebase hosting/functions with Server Side Rendering.  
+
+![alt text](https://cdn.jsdelivr.net/gh/layoutzweb/angular-on-fire@master/src/assets/github-logo.png "Angular On Fire")
   
+#### Base Angular, Firebase, Cypress and Jest project, it is set-up to be deployable to firebase hosting/functions with Server Side Rendering.
+
+![Issues](https://img.shields.io/github/package-json/v/layoutzweb/angular-on-fire)
+![Issues](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
 ![CircleCI](https://img.shields.io/circleci/build/github/layoutzweb/angular-on-fire/master?token=27358c4c9121c5d4f49943e679e2c6d30b31f8a2)
-![CircleCI](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
+![Issues](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
 
   
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8 with some minor adjustments to make it compatible with Firebase Cloud Functions.  
@@ -197,3 +201,11 @@ E2e tests are managed by Cypress, to open the cypress console run:
 npm run e2e:open
 ```  
 Visit [Cypress documentation](https://docs.cypress.io/guides/overview/why-cypress.html) site for more info on how to create e2e tests with Cypress.  
+
+
+## LICENSE
+All assets and code are under the [CC0 LICENSE](https://github.com/layoutsweb/angular-on-fire/blob/master/LICENSE) and in the public domain unless specified otherwise.
+
+This project is in no way associated with Angular. The assets in src/assets/ are trademarks of their respective companies and are under their terms and license.
+
+
