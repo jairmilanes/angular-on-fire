@@ -204,7 +204,7 @@ Visit [Cypress documentation](https://docs.cypress.io/guides/overview/why-cypres
 
 
 ## LICENSE
-All assets and code are under the [CC0 LICENSE](https://github.com/layoutsweb/angular-on-fire/blob/master/LICENSE) and in the public domain unless specified otherwise.
+All assets and code are under the [The Unlicense](https://github.com/layoutsweb/angular-on-fire/blob/master/LICENSE) and in the public domain unless specified otherwise.
 
 This project is in no way associated with Angular. The assets in src/assets/ are trademarks of their respective companies and are under their terms and license.
 
