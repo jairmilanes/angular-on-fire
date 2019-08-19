@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Building application
           command: |
-            npm run build:ssr
+            npm run build:ssr:prod
             cd functions
             npm run build
             cd ../
@@ -111,7 +111,7 @@ jobs:
       - run:
           name: Deploying to Firebase
           command: |
-            ./node_modules/.bin/firebase use $FIREBASE_DEFAULT_PROJECT_ID --alias default
+            ./node_modules/.bin/firebase use $FIREBASE_DEFAULT_PROJECT_ID --alias default --token "$FIREBASE_CI_TOKEN"
             ./node_modules/.bin/firebase deploy --only functions:ssrServer,hosting --token "$FIREBASE_CI_TOKEN"
 
 workflows:
