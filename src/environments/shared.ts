@@ -1,5 +1,3 @@
-
-
 export const defaults = {
     production: false,
     emulator: false,
@@ -8,10 +6,10 @@ export const defaults = {
     page: {
         social: {
             facebook: true,
-            twitter: true
-        }
+            twitter: true,
+        },
     },
     firebase: {
-        region: 'us-central1'
-    }
-};
+        region: 'us-central1',
+    },
+}

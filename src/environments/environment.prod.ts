@@ -1,6 +1,6 @@
-import {defaults} from './shared';
+import {defaults} from './shared'
 
 export const environment = {
-  ...defaults,
-  production: true
-};
+    ...defaults,
+    production: true,
+}

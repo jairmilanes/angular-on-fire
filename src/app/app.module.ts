@@ -1,21 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
+import {BrowserModule} from '@angular/platform-browser'
+import {NgModule} from '@angular/core'
+import {FlexLayoutModule} from '@angular/flex-layout'
+import {AppRoutingModule} from './app-routing.module'
+import {AppComponent} from './app.component'
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    FlexLayoutModule,
-    AppRoutingModule,
-  ],
-  bootstrap: [
-      AppComponent
-  ]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'serverApp'}),
+        FlexLayoutModule,
+        AppRoutingModule,
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

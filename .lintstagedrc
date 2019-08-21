@@ -1,0 +1,10 @@
+{
+    "*.scss": [
+        "stylelint --fix",
+        "git add"
+    ],
+    "*.ts": [
+        "pretty-quick --staged && tslint --fix",
+        "git add"
+    ]
+}
