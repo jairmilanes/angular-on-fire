@@ -1,20 +1,19 @@
 
 
+
 ![alt text](https://cdn.jsdelivr.net/gh/layoutzweb/angular-on-fire@master/src/assets/github-logo.png "Angular On Fire")
   
-#### Base Angular, Firebase, Cypress and Jest project, it is set-up to be deployable to firebase hosting/functions with Server Side Rendering.
+#### Angular On Fire is more than your average starter project, Angular On Fire gives you a whole development environment with everything you need and minimal configuration.  
+
+Angular On Fire puts the best tools on the market into one package, Angular 8 Universal (SSR), RXJS, Firebase, Circle CI, Cypress and Jest, all pre-configured and fully compatible with  [Angular CLI](https://github.com/angular/angular-cli),  so you can get your projects running in no time.
 
 ![Issues](https://img.shields.io/github/package-json/v/layoutzweb/angular-on-fire)
 ![Issues](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
 ![CircleCI](https://img.shields.io/circleci/build/github/layoutzweb/angular-on-fire/master?token=27358c4c9121c5d4f49943e679e2c6d30b31f8a2)
 ![Issues](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
-
-  
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8 with some minor adjustments to make it compatible with Firebase Cloud Functions.  
   
   
 ## [Getting Started](#getting-started)  
-
 Start by creating a new directory to host your files:
 ```bash
 mkdir aof-project
@@ -58,8 +57,7 @@ or alternatively `ng serve`. Navigate to `http://localhost:4200/` to see your ap
 ## [Firebase Integration](#firebase-integration)  
 Angular On Fire is by default built to work with Firebase services, out of the box it uses:  
 - **Hosting**: This is where the client application will be served from  
-- **Cloud** Functions: Hosts our server application, allowing for server side rendered pages.
-
+- **Cloud Functions**: Hosts our server application, allowing for server side rendered pages.
 You can extend this integration with any Firebase service that meet your needs as you build your project.  
 
 ### [Creating a Firebase Project](#firebase-integration-create)
@@ -70,17 +68,19 @@ With your project created, login to Firebase in your console so you can have acc
 firebase login
 ```
 Follow the prompts to complete the authentication of your account.
+If you plan on [integrating with Circle Ci](#circle-ci-integration) using the default configuration, you will need an extra Firebase project to host your staging application, if so, go ahead and repeat the steps above to create your staging project.
 
 ### [Configure your active project](#firebase-integration-set-active)
-To deploy or perform any action on your Firebase, we first must select a project, to do so use the Firebase cli use command:
+
+To deploy or perform any action on your Firebase, you first must select a project, if you haven't done so, use the Firebase cli command to set it:
 ```bash
 firebase use --add
 ```
 A list with your existing projects will be available on your console, select the name of your project in the list and press enter.
 
-It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias. The `default` alias is required if you are using Circle Ci for deployments.
+It will then ask you too give your project an alias, since this is the first project you are associating, enter `default` as the alias.
 
-This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, meaning running commands like `firebase deploy`, will deploy to the current active project.
+This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, this is done so you don't have to pass `--project` parameter to Firebase commands.
 
 Fore more info on the `use` command, checkout the Firebase cli reference page [here](https://firebase.google.com/docs/cli#add_a_project_alias).
   
@@ -106,46 +106,15 @@ This will perform a few steps:
 * Build our SSR Express server and place in `dist/index.js`
 * Copy the `dist` folder to `functions/dist` to be deployed in our SSR cloud function context   
   
-#### [Deploy to Firebase](#firebase-integration-deploy)  
+#### [Manual Deployment](#firebase-integration-deploy)  
 ```bash  
 firebase deploy
 ```  
 This will deploy to Firebase Hosting and Cloud Functions, making your application available at your Firebase  
 project url, which looks something like `https://[YOUR PROJECT ID].web.app` or your custom domain if you have already configured one.  
 
-
-## [Circle CI Integration](#circle-ci-integration)
-Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away.
-This will require your project to be hosted on Github, the default Circle CI configuration can be found at `.circleci/config.yml`.
-
-Follow the below steps to get started with automated deployments.
-
-#### [Create a Circle CI account](#circle-ci-integration)
-If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
-
-#### [Link your Github Project](#circle-ci-integration-link-to-github)
-Follow the steps to  [connect your Github account and link your project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci "Setting up your build on Circle Ci")  to Circle Ci.
-Make sure to skip any project files configuration steps as everything is already configured for you, all you need to do is link your Github repo to Circle Ci.
-
-#### [Configure your CI Firebase Token](#circle-ci-integration-firebase-token)
-In order to build or deploy from a CI environment, you must obtain a Firebase CI token, to do so run the following command in your console:
-```bash
-firebase login:ci
-```
-A browser window will pop-up so you can authenticate your Firebase account, once that is done, look in the command line to find your newly generated CI token.
-
-Head to your Circle CI dashboard, and create 2 new environment variables:
-* FIREBASE_DEFAULT_PROJECT_ID Your production
-* FIREBASE_CI_TOKEN
-Copy the token string and create a new environment variable named `FIREBASE_CI_TOKEN`, with the generated token string as a value.
-More info on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
-
-#### [Push code to your master branch](#circle-ci-integration-push-code)
-Now all it's left to do is pushing code to your master branch, the ci workflow will start automatically and you can follow their progress in your Circle CI dashboard.
-
-#### [Notes](#circle-ci-integration-notes)
-The goal of this integration was to get you up and running with CI easily, you will need to extend this configuration as 
-your project evolves so we left for you to decide how to scale.
+#### [Automated Deployment](#firebase-ci-deploy)
+Angular On Fire comes with a default CI pipeline configuration that takes care of deploying to production or staging depending on the tag or branch being merge in. [Learn more on how to get your project setup with Circle CI for automated builds and deployment](#circle-ci-integration).
 
 
 ## [Release Automation](#release-automation)
@@ -156,14 +125,14 @@ along with other gulp helpers to:
 * Bump your project version based on the release type (patch, minor, major, etc..)
 * Update your change log with a new release
 * Create a release tag based on the updated version
-* Push th new release to Github
+* Push the new release to Github
 
 To perform a release make sure:
-* your current branch is set to master
+* your current branch is set to **master**
 * commit and push any pending changes
-* have a Github Personal Access Token in hand, you can create one [here](https://github.com/settings/tokens).
+* have a **Github Personal Access Token** in hand, you can create one [here](https://github.com/settings/tokens).
 
-With the token in hands, run one of the pre-configured npm scripts:
+With the token in ready, run one of the available npm scripts:
 
 ```bash
 npm run release:pre -- --token [YOUR GITHUB TOKEN]
@@ -184,6 +153,107 @@ For a minor version and tag (0.1.0).
 npm run release:major -- --token [YOUR GITHUB TOKEN]
 ```
 For a major version and tag (1.0.0).
+
+
+
+## [Circle CI Integration](#circle-ci-integration)
+Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away. This will require your project to be hosted on Github, the default Circle CI configuration can be found at `.circleci/config.yml`.
+
+Follow the below steps to get started with automated deployments.
+
+#### [Create a Circle CI account](#circle-ci-integration)
+If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
+
+#### [Link your Github Project](#circle-ci-integration-link-to-github)
+Follow the steps to  [connect your Github account and link your project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci "Setting up your build on Circle Ci")  to Circle Ci.
+
+#### [Configure your CI Firebase Token](#circle-ci-integration-firebase-token)
+In order to build or deploy from a CI environment, you must obtain a Firebase CI token, to do so run the following command in your console:
+```bash
+firebase login:ci
+```
+A browser window will pop-up so you can authenticate your Firebase account, once that is done, look in the command line to find your newly generated CI token, keep it open for the next step or save it locally, just don't commit it to your repo.
+
+Head to your Circle CI dashboard, and create the following  environment variables:
+* **FIREBASE_PROD_PROJECT_ID**: Your production app id
+* **FIREBASE_STAGING_PROJECT_ID**: Your staging app id
+* **FIREBASE_CI_TOKEN**: The token generated in the previous step
+
+Learn more on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
+
+### [Branch Strategy](#branch-strategy)
+Angular On Fire assumes that at least 2 branches should exist from the start:
+
+* **master**: This will be your production, it's where everything that been tested and is ready to be shipped end's up
+* **next**: This is where all your new features will build up to a new release
+
+#### [Branche Naming](#branch-naming)
+You should never push code stray to either `master` or `next`, code should only be merged in via pull requests from branches purposefully created to improve or solve a problem. 
+
+This is not required by Angular On Fire, but one common pattern and the one we use for our projects, is to set branch names with prefixes that indicates what that branch is about. For that we can borrow from Angular commit patterns recommendations to create a organized naming strategy:
+
+* `build/*` Changes that affect the build system or external dependencies
+* `ci/*` Changes to our CI configuration files and scripts
+* `docs/*` Documentation only changes
+* `feat/*` A new feature
+* `fix/*` A bug fix
+* `perf/*` A code change that improves performance
+* `refactor/*` A code change that neither fixes a bug nor adds a feature
+* `style/*` Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+* `test/*` Adding missing tests or correcting existing tests
+
+This makes your repository conveniently easy to understand.
+
+
+#### [Branch Protection Rules](#branch-protection-rules)
+Another important step specially when working in teams is branch protection. To get started, head over to your Github repository then click Settings/Branches.   
+![Github Branch Settings Page](https://i.imgur.com/fEvm39M.jpg)
+
+Create a rule for each of your main branches like the image above, and for each of them consider the following options:
+**Require pull request reviews before merging**
+This is only needed if you are working in teams.
+**Require status checks to pass before merging**
+If you are integrating the Ci workflow, this is needed to make sure code being merged to one of this branches is only allowed if the status checks passes, you can read more about it [here](https://help.github.com/en/articles/configuring-protected-branches).
+To start set your required status checks for both branches as following:
+* ci/circleci: preload
+* ci/circleci: lint
+* ci/circleci: build
+* ci/circleci: test
+
+This will make sure that any branch being merged to either `master` or `next` pass tests before they are allowed to be merged.
+
+### [Workflow](#workflow)
+Angular On Fire comes with a general workflow in mind, the following steps assumes the following:
+ * You have already cloned/downloaded the project, install dependencies and you are ready to start coding:
+* You have configured your branches as suggested in the [Branch Protection Rules](#branch-protection-rules) step.
+* The CI pipelines are only triggered if you have configured your Circle CI/Github integration.
+
+With the above completed, think of your development cycle in 2 phases:
+#### The development phase
+* Create a branch from `next` following the [Branch Naming](#branch-naming) recommendations, eg: `feat/my-feature-branch`
+* Commit changes to this branch until you are ready to merge
+* Create a pull-request to `next` (not `master`)
+	* If you have configured Circle CI, this should trigger a build/test workflow 
+	* Do PR reviews here
+* Merge PR into `next`
+	* This will trigger a deploy to your Firebase staging app
+	* QA team members can validate new features here and approve or not approve a deploy
+
+Repeat the above for every change you want to include in the next release.
+
+#### The deployment phase
+Once all changes are merged into `next` it's time to create a release and push the new code to production:
+* Create a pull request from `next` to `master`
+	* This will also trigger build/test workflow but no deploys
+* Merge the PR into `master`
+* Create a release which will create a new tag
+	* This will trigger the production deployment pipeline
+	* Visit your production url to see your updated application 
+
+
+
+
+
 
 
 ## [Unit Tests](#unit-tests)  
