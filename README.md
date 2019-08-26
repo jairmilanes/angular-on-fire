@@ -178,7 +178,7 @@ Head to your Circle CI dashboard, and create the following  environment variable
 * **FIREBASE_PROD_PROJECT_ID**: Your production app id
 * **FIREBASE_STAGING_PROJECT_ID**: Your staging app id
 * **FIREBASE_CI_TOKEN**: The token generated in the previous step
-* 
+
 Learn more on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
 
 ### [Branch Strategy](#branch-strategy)
