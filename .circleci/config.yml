@@ -1,4 +1,3 @@
-
 restore_main_dependencies: &restore_main_dependencies
   name: Restoring app Dependencies from cache
   keys:
@@ -65,6 +64,19 @@ jobs:
             npm run lint
             cd ../
 
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Test Application
+          command: npm run test
+
   build:
     <<: *defaults
     steps:
@@ -86,20 +98,7 @@ jobs:
             - functions/lib
             - functions/dist
 
-  test:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - attach_workspace:
-          at: .
-
-      - run:
-          name: Test Application
-          command: npm run test
-
-  deploy:
+  deploy_staging:
     <<: *defaults
     steps:
       - checkout
@@ -109,16 +108,46 @@ jobs:
           at: .
 
       - deploy:
-          name: Deploying to Firebase
+          name: Deploying to Firebase Staging
           command: |
-            ./node_modules/.bin/firebase use $FIREBASE_DEFAULT_PROJECT_ID --alias default --token "$FIREBASE_CI_TOKEN"
-            ./node_modules/.bin/firebase deploy --only functions:ssrServer,hosting --token "$FIREBASE_CI_TOKEN"
+            if [[ ! -z "$FIREBASE_STAGING_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
+              ./node_modules/.bin/firebase deploy --project $FIREBASE_STAGING_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
+            else
+              echo "Skipping production deploy, missing Firebase environmental variables."
+            fi
+
+  deploy_prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *restore_main_dependencies
+      - restore_cache: *restore_functions_dependencies
+      - attach_workspace:
+          at: .
+
+      - deploy:
+          name: Deploying to Firebase Production
+          command: |
+            if [[ ! -z "$FIREBASE_PROD_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
+              ./node_modules/.bin/firebase deploy --project $FIREBASE_PROD_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
+            else
+              echo "Skipping production deploy, missing Firebase environmental variables."
+            fi
 
 workflows:
   version: 2
+
+  # This will run for every branch other than master and next
   test:
     jobs:
-      - preload
+      - preload:
+          filters:
+            branches:
+              ignore:
+                - master
+                - next
+            tags:
+              ignore: /.*/
       - lint:
           requires:
             - preload
@@ -128,24 +157,68 @@ workflows:
       - test:
           requires:
             - build
-  deploy:
+
+  # Deploy every merge to next without a tag to staging
+  deploy_staging:
     jobs:
       - preload:
           filters:
             branches:
-              only: master
+              only: next
+            tags:
+              ignore: /.*/
+      - lint:
+          requires:
+            - preload
+      - build:
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
+      - deploy_staging:
+          requires:
+            - test
+
+  # Deploy tags to productions, only tag in master
+  deploy_prod:
+    jobs:
+      - preload:
+          filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /.*/
       - lint:
           requires:
             - preload
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
       - build:
           requires:
             - lint
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
       - test:
           requires:
             - build
-      - deploy:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - deploy_prod:
           requires:
             - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
 
