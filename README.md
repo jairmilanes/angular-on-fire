@@ -187,13 +187,13 @@ Angular On Fire assumes that at least 2 branches should exist from the start:
 * **master**: This will be your production, it's where everything that been tested and is ready to be shipped end's up
 * **next**: This is where all your new features will build up to a new release
 
-#### [Branche Naming](#branch-naming)
+#### [Branch Naming](#branch-naming)
 You should never push code stray to either `master` or `next`, code should only be merged in via pull requests from branches purposefully created to improve or solve a problem. 
 
 This is not required by Angular On Fire, but one common pattern and the one we use for our projects, is to set branch names with prefixes that indicates what that branch is about. For that we can borrow from Angular commit patterns recommendations to create a organized naming strategy:
 
 * `build/*` Changes that affect the build system or external dependencies
-* `ci/*` Changes to our CI configuration files and scripts
+* `ci/*` Changes to CI configuration files and scripts
 * `docs/*` Documentation only changes
 * `feat/*` A new feature
 * `fix/*` A bug fix
