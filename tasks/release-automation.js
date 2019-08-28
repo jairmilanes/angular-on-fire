@@ -15,15 +15,15 @@
  * @arg {url} (optional) The fully qualified domain name for the GitHub instance. Defaults to 'https://api.github.com'
  */
 
-const {src, dest, series} = require('gulp')
-const conventionalChangelog = require('gulp-conventional-changelog')
-const conventionalGithubReleaser = require('conventional-github-releaser')
-const bump = require('gulp-bump')
-const log = require('gulplog')
-const git = require('gulp-git')
-const fs = require('fs')
-const PluginError = require('plugin-error')
-const minimist = require('minimist')
+const { src, dest, series } = require('gulp');
+const conventionalChangelog = require('gulp-conventional-changelog');
+const conventionalGithubReleaser = require('conventional-github-releaser');
+const bump = require('gulp-bump');
+const log = require('gulplog');
+const git = require('gulp-git');
+const fs = require('fs');
+const PluginError = require('plugin-error');
+const minimist = require('minimist');
 
 // Default option values
 const defaults = {
@@ -31,25 +31,21 @@ const defaults = {
     manifest: './package.json',
     changelog: './CHANGELOG.md',
     branch: 'master',
-    url: 'https://api.github.com',
-    prefix: '',
-}
-const {type, manifest, changelog, token, branch, url} = minimist(
-    process.argv.slice(2),
-    {
-        string: [
-            'type',
-            'manifest',
-            'changelog',
-            'token',
-            'branch',
-            'url',
-            'prefix',
-        ],
-        default: defaults,
-    }
-)
-const {GITHUB_TOKEN} = process.env
+    url: 'https://api.github.com'
+};
+const {
+    type,
+    manifest,
+    changelog,
+    token,
+    branch,
+    url
+} = minimist(process.argv.slice(2), {
+    string: ['type', 'manifest', 'changelog', 'token', 'branch', 'url'],
+    default: defaults
+});
+const {GITHUB_TOKEN} = process.env;
+
 
 /**
  * Check if all necessary arguments are set
@@ -57,16 +53,14 @@ const {GITHUB_TOKEN} = process.env
  */
 function checkContext(done) {
     if (!(token || GITHUB_TOKEN) || !manifest || !changelog) {
-        done(
-            new PluginError(
-                'release automation',
-                'Missing parameters, make sure you provide all the require ' +
-                    'arguments when running the release automation task'
-            )
-        )
+        done(new PluginError(
+            'release automation',
+            'Missing parameters, make sure you provide all the require ' +
+            'arguments when running the release automation task'
+        ))
     }
-    log.info('Arguments OK, proceeding...')
-    done()
+    log.info('Arguments OK, proceeding...');
+    done();
 }
 
 /**
@@ -76,11 +70,11 @@ function checkContext(done) {
 function bumpVersion() {
     return src(manifest)
         .pipe(bump({type}))
-        .on('error', function(err) {
-            log.error(err)
-            this.emit('end')
+        .on('error', function (err) {
+            log.error(err);
+            this.emit('end');
         })
-        .pipe(dest('./'))
+        .pipe(dest('./'));
 }
 
 /**
@@ -89,14 +83,12 @@ function bumpVersion() {
  */
 function changeLog() {
     return src(changelog, {
-        buffer: false,
+        buffer: false
     })
-        .pipe(
-            conventionalChangelog({
-                preset: 'angular', // Or to any other commit message convention you use.
-            })
-        )
-        .pipe(dest('./'))
+        .pipe(conventionalChangelog({
+            preset: 'angular' // Or to any other commit message convention you use.
+        }))
+        .pipe(dest('./'));
 }
 
 /**
@@ -106,7 +98,7 @@ function changeLog() {
 function commit() {
     return src('.')
         .pipe(git.add())
-        .pipe(git.commit('[Prerelease] Bumped version number'))
+        .pipe(git.commit('[Prerelease] Bumped version number'));
 }
 
 /**
@@ -116,9 +108,8 @@ function commit() {
 function addTag(done) {
     // We parse the json file instead of using require because require caches
     // multiple calls so the version number won't be updated
-    const version = JSON.parse(fs.readFileSync(manifest, 'utf8')).version
-    const tag = prefix.concat('.', version)
-    git.tag(tag, `Created Tag (${tag}) for version: ${version}`, done)
+    const version = JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
+    git.tag(version, 'Created Tag for version: ' + version, done);
 }
 
 /**
@@ -126,7 +117,7 @@ function addTag(done) {
  * @param done
  */
 function push(done) {
-    git.push('origin', branch, {args: '--tags'}, done)
+    git.push('origin', branch, {args: '--tags'}, done);
 }
 
 /**
@@ -134,16 +125,12 @@ function push(done) {
  * @param done
  */
 function release(done) {
-    conventionalGithubReleaser(
-        {
-            token: token || GITHUB_TOKEN,
-            url: url,
-        },
-        {
-            preset: 'angular', // Or to any other commit message convention you use.
-        },
-        done
-    )
+    conventionalGithubReleaser({
+        token: token || GITHUB_TOKEN,
+        url: url
+    }, {
+        preset: 'angular' // Or to any other commit message convention you use.
+    }, done);
 }
 
 exports.release = series(
@@ -154,4 +141,4 @@ exports.release = series(
     addTag,
     push,
     release
-)
+);
