@@ -135,8 +135,8 @@ exports.release = series(
     checkContext,
     bumpVersion,
     changeLog,
-    // commit,
-    // addTag,
-    // push,
-    // release
+    commit,
+    addTag,
+    push,
+    release
 );
