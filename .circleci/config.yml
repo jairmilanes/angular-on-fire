@@ -1,19 +1,19 @@
 restore_main_dependencies: &restore_main_dependencies
-  name: Restoring app Dependencies from cache
-  keys:
-    - npm-deps-{{ checksum "package-lock.json" }}
-    - npm-deps-
+    name: Restoring app Dependencies from cache
+    keys:
+        - npm-deps-{{ checksum "package-lock.json" }}
+        - npm-deps-
 
 restore_functions_dependencies: &restore_functions_dependencies
-  name: Restoring functions dependencies from cache
-  keys:
-    - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
-    - npm-functions-deps-
+    name: Restoring functions dependencies from cache
+    keys:
+        - npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+        - npm-functions-deps-
 
 defaults: &defaults
-  docker:
-    - image: circleci/node:10.16.0
-  working_directory: ~/repo
+    docker:
+        - image: circleci/node:10.16.0
+    working_directory: ~/repo
 
 # Javascript Node CircleCI 2.0 configuration file
 #
@@ -21,204 +21,224 @@ defaults: &defaults
 #
 version: 2
 jobs:
-  preload:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - run:
-          name: Updating dependencies
-          command: CYPRESS_INSTALL_BINARY=0 npm i
+    preload:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - run:
+                  name: Updating dependencies
+                  command: CYPRESS_INSTALL_BINARY=0 npm i
 
-      - run:
-          name: Installing Cloud Functions Dependencies
-          command: |
-            cd functions
-            npm i
-            cd ../
+            - run:
+                  name: Installing Cloud Functions Dependencies
+                  command: |
+                      cd functions
+                      npm i
+                      cd ../
 
-      - save_cache:
-          name: Caching updated app dependencies
-          paths:
-            - node_modules
-          key: npm-deps-{{ checksum "package-lock.json" }}
+            - save_cache:
+                  name: Caching updated app dependencies
+                  paths:
+                      - node_modules
+                  key: npm-deps-{{ checksum "package-lock.json" }}
 
-      - save_cache:
-          name: Caching updated functions dependencies
-          paths:
-            - functions/node_modules
-          key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
+            - save_cache:
+                  name: Caching updated functions dependencies
+                  paths:
+                      - functions/node_modules
+                  key: npm-functions-deps-{{ checksum "functions/package-lock.json" }}
 
-  lint:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - run:
-          name: Linting
-          command: |
-            npm run lint
-            cd functions
-            npm run lint
-            cd ../
+    lint:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - run:
+                  name: Linting
+                  command: |
+                      npm run lint
+                      cd functions
+                      npm run lint
+                      cd ../
 
-  test:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - attach_workspace:
-          at: .
+    test:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - attach_workspace:
+                  at: .
 
-      - run:
-          name: Test Application
-          command: npm run test
+            - run:
+                  name: Test Application
+                  command: npm run test
 
-  build:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - run:
-          name: Building application
-          command: |
-            npm run build:ssr:prod
-            cd functions
-            npm run build
-            cd ../
+    build_prod:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - run:
+                  name: Building application
+                  command: |
+                      npm run build:ssr:prod
+                      cd functions
+                      npm run build
+                      cd ../
 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
-            - functions/lib
-            - functions/dist
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - dist
+                      - functions/lib
+                      - functions/dist
 
-  deploy_staging:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - attach_workspace:
-          at: .
+    build_staging:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - run:
+                  name: Building application
+                  command: |
+                      npm run build:ssr:staging
+                      cd functions
+                      npm run build
+                      cd ../
 
-      - deploy:
-          name: Deploying to Firebase Staging
-          command: |
-            if [[ ! -z "$FIREBASE_STAGING_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
-              ./node_modules/.bin/firebase deploy --project $FIREBASE_STAGING_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
-            else
-              echo "Skipping production deploy, missing Firebase environmental variables."
-            fi
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - dist
+                      - functions/lib
+                      - functions/dist
 
-  deploy_prod:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache: *restore_main_dependencies
-      - restore_cache: *restore_functions_dependencies
-      - attach_workspace:
-          at: .
+    deploy_staging:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - attach_workspace:
+                  at: .
 
-      - deploy:
-          name: Deploying to Firebase Production
-          command: |
-            if [[ ! -z "$FIREBASE_PROD_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
-              ./node_modules/.bin/firebase deploy --project $FIREBASE_PROD_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
-            else
-              echo "Skipping production deploy, missing Firebase environmental variables."
-            fi
+            - deploy:
+                  name: Deploying to Firebase Staging
+                  command: |
+                      if [[ ! -z "$FIREBASE_STAGING_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
+                        ./node_modules/.bin/firebase deploy --project $FIREBASE_STAGING_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
+                      else
+                        echo "Skipping production deploy, missing Firebase environmental variables."
+                      fi
+
+    deploy_prod:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache: *restore_main_dependencies
+            - restore_cache: *restore_functions_dependencies
+            - attach_workspace:
+                  at: .
+
+            - deploy:
+                  name: Deploying to Firebase Production
+                  command: |
+                      if [[ ! -z "$FIREBASE_PROD_PROJECT_ID" && ! -z "$FIREBASE_CI_TOKEN" ]]; then
+                        ./node_modules/.bin/firebase deploy --project $FIREBASE_PROD_PROJECT_ID --token "$FIREBASE_CI_TOKEN"
+                      else
+                        echo "Skipping production deploy, missing Firebase environmental variables."
+                      fi
 
 workflows:
-  version: 2
+    version: 2
 
-  # This will run for every branch other than master and next
-  test:
-    jobs:
-      - preload:
-          filters:
-            branches:
-              ignore:
-                - master
-                - next
-            tags:
-              ignore: /.*/
-      - lint:
-          requires:
-            - preload
-      - build:
-          requires:
-            - lint
-      - test:
-          requires:
-            - build
+    # This will run for every branch other than master and next
+    test:
+        jobs:
+            - preload:
+                  filters:
+                      branches:
+                          ignore:
+                              - master
+                              - next
+                      tags:
+                          ignore: /.*/
+            - lint:
+                  requires:
+                      - preload
+            - build_prod:
+                  requires:
+                      - lint
+            - test:
+                  requires:
+                      - build_prod
 
-  # Deploy every merge to next without a tag to staging
-  deploy_staging:
-    jobs:
-      - preload:
-          filters:
-            branches:
-              only: next
-            tags:
-              ignore: /.*/
-      - lint:
-          requires:
-            - preload
-      - build:
-          requires:
-            - lint
-      - test:
-          requires:
-            - build
-      - deploy_staging:
-          requires:
-            - test
+    # Deploy every merge to next without a tag to staging
+    deploy_staging:
+        jobs:
+            - preload:
+                  filters:
+                      branches:
+                          only: next
+                      tags:
+                          ignore: /.*/
+            - lint:
+                  requires:
+                      - preload
+            - build_staging:
+                  requires:
+                      - lint
+            - test:
+                  requires:
+                      - build_staging
+            - deploy_staging:
+                  requires:
+                      - test
 
-  # Deploy tags to productions, only tag in master
-  deploy_prod:
-    jobs:
-      - preload:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - lint:
-          requires:
-            - preload
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - build:
-          requires:
-            - lint
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - deploy_prod:
-          requires:
-            - test
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-
+    # Deploy tags to productions, only tag in master
+    deploy_prod:
+        jobs:
+            - preload:
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
+            - lint:
+                  requires:
+                      - preload
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
+            - build_prod:
+                  requires:
+                      - lint
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
+            - test:
+                  requires:
+                      - build_prod
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
+            - deploy_prod:
+                  requires:
+                      - test
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
