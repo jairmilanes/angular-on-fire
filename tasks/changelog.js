@@ -15,18 +15,18 @@ const minimist = require('minimist');
 
 const {
     overwrite,
-    changelog
+    path
 } = minimist(process.argv.slice(2), {
     boolean: ['overwrite'],
-    string: ['changelog'],
+    string: ['path'],
     default: {
         overwrite: false,
-        changelog: 'CHANGELOG.md'
+        path: 'CHANGELOG.md'
     }
 });
 
 function changelog() {
-    return src(changelog, {
+    return src(path, {
         buffer: false
     })
         .pipe(conventionalChangelog({
