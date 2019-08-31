@@ -28,8 +28,8 @@ const minimist = require('minimist');
 // Default option values
 const defaults = {
     type: 'patch',
-    manifest: './package.json',
-    changelog: './CHANGELOG.md',
+    manifest: 'package.json',
+    changelog: 'CHANGELOG.md',
     branch: 'master',
     url: 'https://api.github.com'
 };
@@ -82,9 +82,7 @@ function bumpVersion() {
  * @return {*}
  */
 function changeLog() {
-    return src(changelog, {
-        buffer: false
-    })
+    return src(changelog)
         .pipe(conventionalChangelog({
             preset: 'angular' // Or to any other commit message convention you use.
         }))
@@ -109,7 +107,7 @@ function addTag(done) {
     // We parse the json file instead of using require because require caches
     // multiple calls so the version number won't be updated
     const version = JSON.parse(fs.readFileSync(manifest, 'utf8')).version;
-    git.tag(version, 'Created Tag for version: ' + version, done);
+    git.tag(version, 'Release Tag: ' + version, done);
 }
 
 /**
@@ -137,8 +135,8 @@ exports.release = series(
     checkContext,
     bumpVersion,
     changeLog,
-    commit,
-    addTag,
-    push,
-    release
+    // commit,
+    // addTag,
+    // push,
+    // release
 );
