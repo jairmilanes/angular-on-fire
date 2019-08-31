@@ -1,7 +1,8 @@
 export const defaults = {
     production: false,
     emulator: false,
-    baseUrl: 'localhost:5000',
+    staging: false,
+    baseUrl: 'localhost:4200',
     basePath: '/',
     page: {
         social: {
