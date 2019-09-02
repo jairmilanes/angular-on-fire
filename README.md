@@ -7,10 +7,11 @@
 
 Angular On Fire puts the best tools on the market into one package, Angular 8 Universal (SSR), RXJS, Firebase, Circle CI, Cypress and Jest, all pre-configured and fully compatible with  [Angular CLI](https://github.com/angular/angular-cli),  so you can get your projects running in no time.
 
-![Issues](https://img.shields.io/github/package-json/v/layoutzweb/angular-on-fire)
-![Issues](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
+![Version](https://img.shields.io/github/package-json/v/layoutzweb/angular-on-fire)
 ![CircleCI](https://img.shields.io/circleci/build/github/layoutzweb/angular-on-fire/master?token=27358c4c9121c5d4f49943e679e2c6d30b31f8a2)
-![Issues](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
+![License](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
+![Issues](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
+[![styled with: prettier](https://img.shields.io/badge/styled_with_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
   
   
 ## [Getting Started](#getting-started)  
@@ -25,7 +26,7 @@ Now you got a couple of options to choose from:
 You can head to [Github's Angular On Fire](https://github.com/layoutzweb/angular-on-fire) repository, and download and unzip the project in the directory we created above.
 
 #### [Clone](#getting-started-clone)
-Clone Angular On Fire:  
+Clone **Angular On Fire**:  
 ```bash  
 git clone https://github.com/layoutzweb/angular-on-fire.git .
 ```   
@@ -55,7 +56,7 @@ or alternatively `ng serve`. Navigate to `http://localhost:4200/` to see your ap
 
   
 ## [Firebase Integration](#firebase-integration)  
-Angular On Fire is by default built to work with Firebase services, out of the box it uses:  
+**Angular On Fire** is by default built to work with Firebase services, out of the box it uses:  
 - **Hosting**: This is where the client application will be served from  
 - **Cloud Functions**: Hosts our server application, allowing for server side rendered pages.
 You can extend this integration with any Firebase service that meet your needs as you build your project.  
@@ -72,7 +73,7 @@ If you plan on [integrating with Circle Ci](#circle-ci-integration) using the de
 
 ### [Configure your active project](#firebase-integration-set-active)
 
-To deploy or perform any action on your Firebase, you first must select a project, if you haven't done so, use the Firebase cli command to set it:
+To deploy or perform any action on your Firebase, you first must select a project, so you don't have to pass `--project [MyProjecName]` to every command, if you haven't done so, use the Firebase cli command to set it:
 ```bash
 firebase use --add
 ```
@@ -82,10 +83,13 @@ It will then ask you too give your project an alias, since this is the first pro
 
 This will add your project to the `.firebaserc` file under the `default` alias and will set it as the active project in the console, this is done so you don't have to pass `--project` parameter to Firebase commands.
 
+#### [Multiple Environments](#multiple-environments)
+The **Angular On Fire CI integration** comes configured to work with 2 environments, on for production and one for staging, so if you plan on working with the CI workflow, go ahead and repeat the steps to create a new Firebase project to hold your staging environment.
+
 Fore more info on the `use` command, checkout the Firebase cli reference page [here](https://firebase.google.com/docs/cli#add_a_project_alias).
   
 ### [Running the Firebase Emulator](#firebase-integration-emulator)  
-Firebase cli provides a great way to test your builds locally before deployments in an environment that emulates the Firebase cloud environment. To do so run the following command from the root of the project:  
+**Firebase** cli provides a great way to test your builds locally before deployments in an environment that emulates the Firebase cloud environment. To do so run the following command from the root of the project:  
 ```bash  
 npm run emulator
 ```  
@@ -105,20 +109,23 @@ This will perform a few steps:
 * Build the Angular server application and place it in `dist/server`
 * Build our SSR Express server and place in `dist/index.js`
 * Copy the `dist` folder to `functions/dist` to be deployed in our SSR cloud function context   
-  
+
+You can also build with the `build:ssr:staging` command, which will build your project using the staging environment configuration.
+
+
 #### [Manual Deployment](#firebase-integration-deploy)  
 ```bash  
 firebase deploy
 ```  
-This will deploy to Firebase Hosting and Cloud Functions, making your application available at your Firebase  
+This will deploy to **Firebase Hosting** and **Cloud Functions**, making your application available at your **Firebase** 
 project url, which looks something like `https://[YOUR PROJECT ID].web.app` or your custom domain if you have already configured one.  
 
 #### [Automated Deployment](#firebase-ci-deploy)
-Angular On Fire comes with a default CI pipeline configuration that takes care of deploying to production or staging depending on the tag or branch being merge in. [Learn more on how to get your project setup with Circle CI for automated builds and deployment](#circle-ci-integration).
+**Angular On Fire** comes with a default CI pipeline configuration that takes care of deploying to production or staging depending on the tag or branch being merge in. [Learn more on how to get your project setup with Circle CI for automated builds and deployment](#circle-ci-integration).
 
 
 ## [Release Automation](#release-automation)
-Angular On Fire provides a Gulp task to help you automate your release process, it uses 
+**Angular On Fire** provides a Gulp task to help you automate your release process, it uses 
 <a href="https://www.npmjs.com/package/conventional-changelog" target="_blank">Conventional Changelog</a> and 
 <a href="https://www.npmjs.com/package/conventional-github-releaser" target="_blank">Conventional Github Releaser</a> 
 along with other gulp helpers to:
@@ -132,7 +139,7 @@ To perform a release make sure:
 * commit and push any pending changes
 * have a **Github Personal Access Token** in hand, you can create one [here](https://github.com/settings/tokens).
 
-With the token in ready, run one of the available npm scripts:
+With the token in hands, run one of the available npm scripts:
 
 ```bash
 npm run release:pre -- --token [YOUR GITHUB TOKEN]
@@ -157,12 +164,12 @@ For a major version and tag (1.0.0).
 
 
 ## [Circle CI Integration](#circle-ci-integration)
-Circle CI is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away. This will require your project to be hosted on Github, the default Circle CI configuration can be found at `.circleci/config.yml`.
+**Circle CI** is a widely used job runner, it's easy to manage, integrate and they offer a free account so you can get started right away. This will require your project to be hosted on Github, the default Circle CI configuration can be found at `.circleci/config.yml`.
 
 Follow the below steps to get started with automated deployments.
 
 #### [Create a Circle CI account](#circle-ci-integration)
-If you haven't done so, go ahead and get a Circle CI free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
+If you haven't done so, go ahead and get a **Circle CI** free account  [here](https://circleci.com/integrations/github/ "Github & Circle Ci Integration"), you can log in with your github account to make it even easier to configure.
 
 #### [Link your Github Project](#circle-ci-integration-link-to-github)
 Follow the steps to  [connect your Github account and link your project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci "Setting up your build on Circle Ci")  to Circle Ci.
@@ -182,7 +189,7 @@ Head to your Circle CI dashboard, and create the following  environment variable
 Learn more on [setting environment variables in Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project).
 
 ### [Branch Strategy](#branch-strategy)
-Angular On Fire assumes that at least 2 branches should exist from the start:
+Angular On Fire assumes that 2 branches should exist from the start:
 
 * **master**: This will be your production, it's where everything that been tested and is ready to be shipped end's up
 * **next**: This is where all your new features will build up to a new release
@@ -190,7 +197,7 @@ Angular On Fire assumes that at least 2 branches should exist from the start:
 #### [Branch Naming](#branch-naming)
 You should never push code stray to either `master` or `next`, code should only be merged in via pull requests from branches purposefully created to improve or solve a problem. 
 
-This is not required by Angular On Fire, but one common pattern and the one we use for our projects, is to set branch names with prefixes that indicates what that branch is about. For that we can borrow from Angular commit patterns recommendations to create a organized naming strategy:
+This is not required, but one common pattern is to set branch names with prefixes that indicates what that branch is about. For that we can borrow from Angular commit patterns recommendations to create a organized naming strategy:
 
 * `build/*` Changes that affect the build system or external dependencies
 * `ci/*` Changes to CI configuration files and scripts
@@ -206,71 +213,83 @@ This makes your repository conveniently easy to understand.
 
 
 #### [Branch Protection Rules](#branch-protection-rules)
-Another important step specially when working in teams is branch protection. To get started, head over to your Github repository then click Settings/Branches.   
-![Github Branch Settings Page](https://i.imgur.com/fEvm39M.jpg)
+Another important step specially when working in teams, is branch protection, you can set rules for branches so pull requests can only be merged if they satisfy your rules.
+
+To get started, head over to your Github repository then click Settings/Branches.   
+![Github Branch Settings Page](https://i.imgur.com/PZcmFid.jpg?1)
 
 Create a rule for each of your main branches like the image above, and for each of them consider the following options:
 **Require pull request reviews before merging**
 This is only needed if you are working in teams.
 **Require status checks to pass before merging**
-If you are integrating the Ci workflow, this is needed to make sure code being merged to one of this branches is only allowed if the status checks passes, you can read more about it [here](https://help.github.com/en/articles/configuring-protected-branches).
+This is needed to make sure code being merged to one of this branches, is only allowed if the status checks passes, you can read more about it [here](https://help.github.com/en/articles/configuring-protected-branches).
 To start set your required status checks for both branches as following:
 * ci/circleci: preload
 * ci/circleci: lint
 * ci/circleci: build
 * ci/circleci: test
 
+There are 3 Circle CI jobs configured:
+
+* **test**: Job that runs for any PR being merged anywhere
+* **deploy_staging**: Job that runs for any branch being merged to next, includes lint, build & test
+* **deploy_prod**: Job that runs and a release tag is created (should be done from `master`)
+
 This will make sure that any branch being merged to either `master` or `next` pass tests before they are allowed to be merged.
 
 ### [Workflow](#workflow)
-Angular On Fire comes with a general workflow in mind, the following steps assumes the following:
- * You have already cloned/downloaded the project, install dependencies and you are ready to start coding:
+**Angular On Fire** comes with a general workflow in mind, the following steps assumes the following:
+* You have already cloned/downloaded the project, install dependencies and you are ready to start coding:
 * You have configured your branches as suggested in the [Branch Protection Rules](#branch-protection-rules) step.
-* The CI pipelines are only triggered if you have configured your Circle CI/Github integration.
+* You added your Github repo in Circle CI.
 
 With the above completed, think of your development cycle in 2 phases:
-#### The development phase
+#### [The development phase](#workflow-development-phase)
 * Create a branch from `next` following the [Branch Naming](#branch-naming) recommendations, eg: `feat/my-feature-branch`
 * Commit changes to this branch until you are ready to merge
 * Create a pull-request to `next` (not `master`)
 	* If you have configured Circle CI, this should trigger a build/test workflow 
 	* Do PR reviews here
 * Merge PR into `next`
-	* This will trigger a deploy to your Firebase staging app
-	* QA team members can validate new features here and approve or not approve a deploy
+	* This will trigger a deploy to your Firebase staging project
+	* QA team members can validate new features here and approve or deny a deploy
 
 Repeat the above for every change you want to include in the next release.
 
-#### The deployment phase
+#### [The deployment phase](#workflow-deployment-phase)
 Once all changes are merged into `next` it's time to create a release and push the new code to production:
 * Create a pull request from `next` to `master`
-	* This will also trigger build/test workflow but no deploys
+	* This will also trigger lint/build/test workflow but no deploys
 * Merge the PR into `master`
-* Create a release which will create a new tag
-	* This will trigger the production deployment pipeline
+* [Create a new release](#release-automation):
+	* This will trigger the production deployment workflow
 	* Visit your production url to see your updated application 
 
 
-
-
-
-
-
 ## [Unit Tests](#unit-tests)  
-Angular On Fire uses Jest to run unit tests, you can start your tests by running:      
+**Angular On Fire** uses **Jest** to run unit tests, you can start your tests by running:      
 ```bash
 npm run test
 ``` 
+You can writes your tests for any Angular Component/Service/Directive/Pipe just as you would write for a regular Angular project, Jest only runs your tests.
+ 
 Visit [Jest](https://jestjs.io/docs/en/getting-started) documentation to learn more on how to create and run tests with Jets.
 Visit the [Angular Testing Guide](https://angular.io/guide/testing) to lerna more about Angular tests.  
+You can extend your testing tools by using a library like [Spectator](https://www.npmjs.com/package/@ngneat/spectator) which provides a simplified way to create **Angular** tests. 
   
   
 ## [E2E Tests](#e2e-tests)  
-E2e tests are managed by Cypress, to open the cypress console run:  
+E2e tests are created and managed with **Cypress**, to open the cypress console run:  
 ```bash
 npm run e2e:open
-```  
-Visit [Cypress documentation](https://docs.cypress.io/guides/overview/why-cypress.html) site for more info on how to create e2e tests with Cypress.  
+``` 
+Or if you want to run your tests in headless environment, use:
+```bash
+npm run e2e:run
+``` 
+The latter is much faster as you don't need to wait for the UI to open.
+
+Visit [Cypress documentation](https://docs.cypress.io/guides/overview/why-cypress.html) site for more info on how to create e2e tests with **Cypress**.  
 
 
 ## LICENSE
