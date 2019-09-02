@@ -2,6 +2,6 @@ import {defaults} from './shared'
 
 export const environment = {
     ...defaults,
-    emulator: true,
-    baseUrl: 'localhost:5000',
+    staging: true,
+    baseUrl: '[YOUR STAGING URL]',
 }

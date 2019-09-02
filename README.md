@@ -109,7 +109,10 @@ This will perform a few steps:
 * Build the Angular server application and place it in `dist/server`
 * Build our SSR Express server and place in `dist/index.js`
 * Copy the `dist` folder to `functions/dist` to be deployed in our SSR cloud function context   
-  
+
+You can also build with the `build:ssr:staging` command, which will build your project using the staging environment configuration.
+
+
 #### [Manual Deployment](#firebase-integration-deploy)  
 ```bash  
 firebase deploy
@@ -213,7 +216,7 @@ This makes your repository conveniently easy to understand.
 Another important step specially when working in teams, is branch protection, you can set rules for branches so pull requests can only be merged if they satisfy your rules.
 
 To get started, head over to your Github repository then click Settings/Branches.   
-![Github Branch Settings Page](https://i.imgur.com/fEvm39M.jpg)
+![Github Branch Settings Page](https://i.imgur.com/PZcmFid.jpg?1)
 
 Create a rule for each of your main branches like the image above, and for each of them consider the following options:
 **Require pull request reviews before merging**
