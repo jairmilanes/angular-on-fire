@@ -9,8 +9,9 @@ Angular On Fire puts the best tools on the market into one package, Angular 8 Un
 
 ![Version](https://img.shields.io/github/package-json/v/layoutzweb/angular-on-fire)
 ![CircleCI](https://img.shields.io/circleci/build/github/layoutzweb/angular-on-fire/master?token=27358c4c9121c5d4f49943e679e2c6d30b31f8a2)
-![License](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![Issues](https://img.shields.io/github/issues/layoutzweb/angular-on-fire)
+![License](https://img.shields.io/github/license/layoutzweb/angular-on-fire)
 [![styled with: prettier](https://img.shields.io/badge/styled_with_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
   
   
@@ -210,6 +211,19 @@ This is not required, but one common pattern is to set branch names with prefixe
 * `test/*` Adding missing tests or correcting existing tests
 
 This makes your repository conveniently easy to understand.
+
+#### [Commitizen Firendly](#commitizen-friendly)
+To help you keep your repository and commit history looking good, **Angular On Fire** comes with [Commitizen](https://commitizen.github.io), it is a great tool to standardize commit messages across contributors.
+To use it, simply change your commit command from:
+```bash
+git commit
+```
+to:
+```bash
+git cz
+```
+And you will be prompt to choose a few options to construct your commit message, this also contributes to the generation of the changelog, which will breakdown your latest changes into a readable release description.
+For more information on **Commitizen** head over to [their website](https://commitizen.github.io).
 
 
 #### [Branch Protection Rules](#branch-protection-rules)
