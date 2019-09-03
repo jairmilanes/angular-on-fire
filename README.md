@@ -230,7 +230,7 @@ For more information on **Commitizen** head over to [their website](https://comm
 Another important step specially when working in teams, is branch protection, you can set rules for branches so pull requests can only be merged if they satisfy your rules.
 
 To get started, head over to your Github repository then click Settings/Branches.   
-![Github Branch Settings Page](https://i.imgur.com/PZcmFid.jpg?1)
+![Github Branch Settings Page](https://i.imgur.com/PZcmFid.jpg)
 
 Create a rule for each of your main branches like the image above, and for each of them consider the following options:
 **Require pull request reviews before merging**
