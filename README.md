@@ -195,23 +195,6 @@ Angular On Fire assumes that 2 branches should exist from the start:
 * **master**: This will be your production, it's where everything that been tested and is ready to be shipped end's up
 * **next**: This is where all your new features will build up to a new release
 
-#### [Branch Naming](#branch-naming)
-You should never push code stray to either `master` or `next`, code should only be merged in via pull requests from branches purposefully created to improve or solve a problem. 
-
-This is not required, but one common pattern is to set branch names with prefixes that indicates what that branch is about. For that we can borrow from Angular commit patterns recommendations to create a organized naming strategy:
-
-* `build/*` Changes that affect the build system or external dependencies
-* `ci/*` Changes to CI configuration files and scripts
-* `docs/*` Documentation only changes
-* `feat/*` A new feature
-* `fix/*` A bug fix
-* `perf/*` A code change that improves performance
-* `refactor/*` A code change that neither fixes a bug nor adds a feature
-* `style/*` Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-* `test/*` Adding missing tests or correcting existing tests
-
-This makes your repository conveniently easy to understand.
-
 #### [Commitizen Firendly](#commitizen-friendly)
 To help you keep your repository and commit history looking good, **Angular On Fire** comes with [Commitizen](https://commitizen.github.io), it is a great tool to standardize commit messages across contributors.
 To use it, simply change your commit command from:
@@ -259,7 +242,7 @@ This will make sure that any branch being merged to either `master` or `next` pa
 
 With the above completed, think of your development cycle in 2 phases:
 #### [The development phase](#workflow-development-phase)
-* Create a branch from `next` following the [Branch Naming](#branch-naming) recommendations, eg: `feat/my-feature-branch`
+* Create a branch from `next`
 * Commit changes to this branch until you are ready to merge
 * Create a pull-request to `next` (not `master`)
 	* If you have configured Circle CI, this should trigger a build/test workflow 
