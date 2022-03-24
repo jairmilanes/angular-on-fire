@@ -76,7 +76,7 @@
     "jest": "24.8.0",
     "jest-preset-angular": "7.1.1",
     "lint-staged": "9.2.3",
-    "minimist": "1.2.3",
+    "minimist": "1.2.6",
     "ng-inline-svg": "8.5.1",
     "plugin-error": "1.0.1",
     "prettier": "1.18.2",
