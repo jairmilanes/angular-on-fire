@@ -49,7 +49,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.2",
+    "@angular-devkit/build-angular": "~15.0.4",
     "@angular/cli": "~8.3.2",
     "@angular/compiler-cli": "~8.2.4",
     "@angular/language-service": "~8.2.4",
@@ -84,14 +84,14 @@
     "stylelint": "10.1.0",
     "stylelint-config-recommended-scss": "3.3.0",
     "stylelint-scss": "3.9.4",
-    "ts-loader": "5.4.5",
+    "ts-loader": "9.4.2",
     "ts-node": "7.0.1",
     "tslib": "1.10.0",
     "tslint": "5.15.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.4.5",
-    "webpack": "4.39.3",
-    "webpack-cli": "3.3.7"
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.1"
   },
   "jest": {
     "preset": "jest-preset-angular",
